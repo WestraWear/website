@@ -1,26 +1,203 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500&family=Inter:wght@300;400;500;600&display=swap');
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Backgrounds — light cream palette */
+  --bg:           #F8F4EE;
+  --bg-section:   #F0EAE0;
+  --bg-alt:       #E8E0D4;
+  --bg-card:      #FDFCFA;
+  --ivory:        #F8F4EE;
+  --warm-white:   #F8F4EE;
+  /* Text — rich dark browns */
+  --text-dark:    #28201A;
+  --text-mid:     #5A4A3C;
+  --text-light:   #8C7E72;
+  --champagne:    #5A4A3C;
+  --beige:        #E8E0D4;
+  --muted-rose:   #8C7E72;
+  --soft-neutral: #E8E0D4;
+  /* Accent — warm bronze/gold */
+  --accent:       #9B6335;
+  --gold:         #9B6335;
+  --gold-light:   #C4956A;
+  --gold-dark:    #6E4520;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+* {
+  box-sizing: border-box;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* ── Universal bezier transitions ─────────────────── */
+a, button, input, textarea, select {
+  transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* Override for elements that need specific properties */
+a:focus-visible, button:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 2px;
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: var(--bg);
+  color: var(--text-dark);
+  font-family: 'Inter', Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+/* Headings → Cormorant Garamond */
+.font-playfair { font-family: 'Cormorant Garamond', Georgia, serif; }
+.font-cormorant { font-family: 'Cormorant Garamond', Georgia, serif; }
+/* Body → Inter */
+.font-inter { font-family: 'Inter', Arial, sans-serif; }
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+}
+
+.bg-luxury-gradient {
+  background: var(--bg-section);
+}
+
+.bg-gold-gradient {
+  background: linear-gradient(135deg, #6E4520 0%, #9B6335 50%, #C4956A 100%);
+}
+
+.text-gold { color: var(--gold); }
+
+.glass {
+  background: rgba(253, 252, 250, 0.88);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(155, 99, 53, 0.15);
+}
+
+.glass-dark {
+  background: rgba(248, 244, 238, 0.92);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(155, 99, 53, 0.15);
+}
+
+.divider-gold {
+  width: 40px;
+  height: 1px;
+  background: var(--gold);
+  opacity: 0.5;
+  margin: 0 auto;
+}
+
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: rgba(155,99,53,0.35); border-radius: 2px; }
+
+.card-hover {
+  transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1),
+              box-shadow 0.6s cubic-bezier(0.22, 1, 0.36, 1),
+              border-color 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.card-hover:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 20px 60px rgba(155,99,53,0.08);
+}
+
+.img-overlay-wrap { overflow: hidden; }
+.img-overlay-wrap img {
+  transition: transform 1s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.img-overlay-wrap:hover img { transform: scale(1.05); }
+
+.gold-underline { position: relative; }
+.gold-underline::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background: var(--gold);
+  transition: width 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.gold-underline:hover::after { width: 100%; }
+
+/* ── Button base: sharp corners, shared transitions ── */
+.btn-outline,
+.btn-whatsapp,
+.btn-instagram {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  border-radius: 0;
+  transition: color 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+              border-color 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+              border-radius 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+              transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.btn-primary {
+  border-radius: 0;
+}
+
+/* On hover: pill shape */
+.btn-outline:hover,
+.btn-whatsapp:hover,
+.btn-instagram:hover {
+  border-radius: 9999px;
+  transform: translateY(-2px);
+}
+
+/* ── Wipe layer (outline / whatsapp / instagram only) ── */
+.btn-outline::before,
+.btn-whatsapp::before,
+.btn-instagram::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  clip-path: inset(100% 100% 0% 0% round 0px);
+  transition: clip-path 0.55s cubic-bezier(0.22, 1, 0.36, 1),
+              border-radius 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+  pointer-events: none;
+}
+
+.btn-outline:hover::before,
+.btn-whatsapp:hover::before,
+.btn-instagram:hover::before {
+  clip-path: inset(0% 0% 0% 0% round 9999px);
+}
+
+/* Wipe fill colors */
+.btn-outline::before   { background: var(--gold); }
+.btn-whatsapp::before  { background: #25D366; }
+.btn-instagram::before {
+  background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+}
+
+/* Text/border color changes on hover */
+.btn-outline:hover   { color: #fff !important; border-color: var(--gold) !important; }
+.btn-whatsapp:hover  { color: #fff !important; border-color: #25D366 !important; }
+.btn-instagram:hover { color: #fff !important; border-color: transparent !important; }
+
+/* Hover overlay bezier */
+.hover-overlay {
+  transition: opacity 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* Play button scale */
+.play-btn {
+  transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.group:hover .play-btn { transform: scale(1.12); }
+
+.section-padding { padding: 120px; }
+
+@media (max-width: 768px) {
+  .section-padding { padding: 72px; }
 }
