@@ -13,9 +13,9 @@ export default function AboutSection() {
       className="section-padding"
       style={{ background: "var(--bg-section)" }}
     >
-      <div className="max-w-7xl mx-auto px-8" ref={ref}>
+      <div className="max-w-7xl mx-auto px-4 md:px-8" ref={ref}>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-24 items-start">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-24 items-start">
           {/* Left — large headline */}
           <motion.div
             initial={{ opacity: 0, y: 40 }}

@@ -48,7 +48,7 @@ export default function FeaturedCollections() {
 
   return (
     <section className="section-padding" style={{ background: "var(--bg)" }}>
-      <div className="max-w-7xl mx-auto px-8" ref={ref}>
+      <div className="max-w-7xl mx-auto px-4 md:px-8" ref={ref}>
         {/* Header row */}
         <motion.div
           initial={{ opacity: 0, y: 16 }}
@@ -111,7 +111,7 @@ export default function FeaturedCollections() {
                   }}
                 >
                   {/* Left */}
-                  <div className="flex items-center gap-8">
+                  <div className="flex items-center gap-4 md:gap-8">
                     <span
                       className="font-inter text-[11px] w-8 shrink-0"
                       style={{ color: "var(--text-light)" }}

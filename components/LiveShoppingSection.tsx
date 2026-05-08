@@ -19,7 +19,7 @@ export default function LiveShoppingSection() {
       className="section-padding"
       style={{ background: "var(--bg-section)", paddingTop: 0 }}
     >
-      <div className="max-w-7xl mx-auto px-8" ref={ref}>
+      <div className="max-w-7xl mx-auto px-4 md:px-8" ref={ref}>
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 16 }}
@@ -52,7 +52,7 @@ export default function LiveShoppingSection() {
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-start">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-20 items-start">
           {/* Session schedule */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}

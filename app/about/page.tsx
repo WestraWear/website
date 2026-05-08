@@ -66,7 +66,7 @@ export default function AboutPage() {
           W
         </div>
 
-        <div className="relative z-10 max-w-7xl mx-auto px-8 pb-20 w-full">
+        <div className="relative z-10 max-w-7xl mx-auto px-4 md:px-8 pb-12 md:pb-20 w-full">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -113,8 +113,8 @@ export default function AboutPage() {
 
       {/* ── Manifesto ────────────────────────────────── */}
       <section className="section-padding" style={{ background: "var(--bg)" }}>
-        <div className="max-w-7xl mx-auto px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 items-start">
+        <div className="max-w-7xl mx-auto px-4 md:px-8">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 md:gap-16 items-start">
             <motion.div
               initial={{ opacity: 0, x: -30 }}
               whileInView={{ opacity: 1, x: 0 }}
@@ -174,7 +174,7 @@ export default function AboutPage() {
         className="border-y"
         style={{ borderColor: "rgba(155,99,53,0.12)", background: "rgba(155,99,53,0.03)" }}
       >
-        <div className="max-w-7xl mx-auto px-8">
+        <div className="max-w-7xl mx-auto px-4 md:px-8">
           <div className="grid grid-cols-2 md:grid-cols-4">
             {stats.map((s, i) => (
               <motion.div
@@ -183,7 +183,7 @@ export default function AboutPage() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.6, delay: i * 0.08 }}
-                className="py-10 px-8 flex flex-col gap-1 border-r last:border-r-0"
+                className="py-6 md:py-10 px-4 md:px-8 flex flex-col gap-1 border-r last:border-r-0"
                 style={{ borderColor: "rgba(155,99,53,0.1)" }}
               >
                 <span className="font-playfair text-4xl" style={{ color: "var(--text-dark)" }}>
@@ -203,13 +203,13 @@ export default function AboutPage() {
 
       {/* ── Values ───────────────────────────────────── */}
       <section className="section-padding" style={{ background: "var(--bg-section)" }}>
-        <div className="max-w-7xl mx-auto px-8">
+        <div className="max-w-7xl mx-auto px-4 md:px-8">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
-            className="mb-16"
+            className="mb-8 md:mb-16"
           >
             <p
               className="font-inter text-[9px] tracking-[0.5em] uppercase mb-4"

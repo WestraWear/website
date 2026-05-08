@@ -198,6 +198,10 @@ h1, h2, h3, h4, h5, h6 {
 
 .section-padding { padding: 120px; }
 
+@media (max-width: 1024px) {
+  .section-padding { padding: 80px 32px; }
+}
+
 @media (max-width: 768px) {
-  .section-padding { padding: 72px; }
+  .section-padding { padding: 56px 20px; }
 }

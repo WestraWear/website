@@ -47,7 +47,7 @@ export default function Testimonials() {
       className="section-padding"
       style={{ background: "var(--bg-alt)" }}
     >
-      <div className="max-w-7xl mx-auto px-8" ref={ref}>
+      <div className="max-w-7xl mx-auto px-4 md:px-8" ref={ref}>
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 16 }}

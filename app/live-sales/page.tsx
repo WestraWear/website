@@ -195,7 +195,7 @@ export default function LiveSalesPage() {
           }}
         />
 
-        <div className="relative z-10 max-w-7xl mx-auto px-8">
+        <div className="relative z-10 max-w-7xl mx-auto px-4 md:px-8">
           {/* Top label row */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -215,7 +215,7 @@ export default function LiveSalesPage() {
           </motion.div>
 
           {/* Big headline */}
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 mb-16">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 md:gap-10 mb-10 md:mb-16">
             <motion.div
               initial={{ opacity: 0, y: 40 }}
               animate={{ opacity: 1, y: 0 }}
@@ -276,13 +276,13 @@ export default function LiveSalesPage() {
 
       {/* ── How It Works ─────────────────────────────── */}
       <section className="section-padding" style={{ background: "var(--bg)" }}>
-        <div className="max-w-7xl mx-auto px-8">
+        <div className="max-w-7xl mx-auto px-4 md:px-8">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-            className="mb-16"
+            className="mb-8 md:mb-16"
           >
             <p className="font-inter text-[9px] tracking-[0.5em] uppercase mb-4" style={{ color: "var(--gold)" }}>
               Process
@@ -330,8 +330,8 @@ export default function LiveSalesPage() {
 
       {/* ── FAQ ──────────────────────────────────────── */}
       <section className="section-padding" style={{ background: "var(--bg-section)" }}>
-        <div className="max-w-7xl mx-auto px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-16">
+        <div className="max-w-7xl mx-auto px-4 md:px-8">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 md:gap-16">
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}

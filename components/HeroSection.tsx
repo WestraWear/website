@@ -55,7 +55,7 @@ export default function HeroSection() {
       </motion.div>
 
       {/* Main content */}
-      <div className="relative z-10 max-w-7xl mx-auto px-8 pb-24 pt-40 w-full">
+      <div className="relative z-10 max-w-7xl mx-auto px-4 md:px-8 pb-16 md:pb-24 pt-24 md:pt-40 w-full">
 
         {/* Main headline */}
         <motion.h1
@@ -88,7 +88,7 @@ export default function HeroSection() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.9, delay: 0.9 }}
-          className="flex flex-col md:flex-row items-start md:items-end justify-between gap-10 border-t pt-10"
+          className="flex flex-col md:flex-row items-start md:items-end justify-between gap-6 md:gap-10 border-t pt-8 md:pt-10"
           style={{ borderColor: "rgba(184,149,106,0.12)" }}
         >
           <p
@@ -100,7 +100,7 @@ export default function HeroSection() {
             and identity.
           </p>
 
-          <div className="flex items-center gap-6 shrink-0">
+          <div className="flex flex-wrap items-center gap-4 md:gap-6 shrink-0">
             <Link
               href="/collections"
               className="group font-inter text-[10px] tracking-[0.3em] uppercase flex items-center gap-3 transition-opacity duration-300 hover:opacity-60"
@@ -134,7 +134,7 @@ export default function HeroSection() {
         className="relative z-10 border-t"
         style={{ borderColor: "rgba(155,99,53,0.1)", background: "rgba(155,99,53,0.04)" }}
       >
-        <div className="max-w-7xl mx-auto px-8">
+        <div className="max-w-7xl mx-auto px-4 md:px-8">
           <div className="grid grid-cols-3">
               {[
               { label: "Fresh Drops Weekly", value: "New" },
@@ -143,7 +143,7 @@ export default function HeroSection() {
             ].map((stat, i) => (
               <div
                 key={stat.label}
-                className="py-6 px-6 first:pl-0"
+                className="py-4 md:py-6 px-3 md:px-6 first:pl-0"
                 style={{ borderRight: i < 2 ? "1px solid rgba(184,149,106,0.12)" : "none" }}
               >
                 <p

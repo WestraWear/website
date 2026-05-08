@@ -52,7 +52,7 @@ export default function InstagramGalleryPage() {
         <div className="absolute right-8 md:right-16 top-1/2 -translate-y-1/2 select-none pointer-events-none font-playfair" style={{ fontSize: "clamp(160px,28vw,400px)", color: "rgba(155,99,53,0.06)", lineHeight: 1 }}>
           @
         </div>
-        <div className="relative z-10 max-w-7xl mx-auto px-8 pb-20 pt-40 w-full">
+        <div className="relative z-10 max-w-7xl mx-auto px-4 md:px-8 pb-12 md:pb-20 pt-28 md:pt-40 w-full">
           <motion.p initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7, ease: [0.22,1,0.36,1] }} className="font-inter text-[9px] tracking-[0.5em] uppercase mb-6 flex items-center gap-3" style={{ color: "var(--gold)" }}>
             <FaInstagram size={10} />
             <span className="w-8 h-px inline-block" style={{ background: "var(--gold)" }} />
@@ -69,7 +69,7 @@ export default function InstagramGalleryPage() {
 
       {/* Stats */}
       <section style={{ background: "var(--bg-alt)", borderTop: "1px solid rgba(155,99,53,0.1)", borderBottom: "1px solid rgba(155,99,53,0.1)" }}>
-        <div className="max-w-7xl mx-auto px-8 py-8 grid grid-cols-2 md:grid-cols-4">
+        <div className="max-w-7xl mx-auto px-4 md:px-8 py-8 grid grid-cols-2 md:grid-cols-4">
           {stats.map((s, i) => (
             <motion.div key={s.label} initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6, delay: i * 0.07, ease: [0.22,1,0.36,1] }} className="flex flex-col items-center py-4 gap-1 border-r last:border-r-0" style={{ borderColor: "rgba(155,99,53,0.1)" }}>
               <span className="font-playfair text-3xl md:text-4xl" style={{ color: "var(--gold)" }}>{s.value}</span>
@@ -81,7 +81,7 @@ export default function InstagramGalleryPage() {
 
       {/* Gallery Grid */}
       <section className="section-padding" style={{ background: "var(--bg)" }}>
-        <div className="max-w-7xl mx-auto px-8">
+        <div className="max-w-7xl mx-auto px-4 md:px-8">
           <motion.div initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.7, ease: [0.22,1,0.36,1] }} className="flex items-end justify-between mb-14">
             <div>
               <p className="font-inter text-[9px] tracking-[0.5em] uppercase mb-3" style={{ color: "var(--gold)" }}>Latest Posts</p>
@@ -124,7 +124,7 @@ export default function InstagramGalleryPage() {
 
       {/* Reels */}
       <section className="section-padding" style={{ background: "var(--bg-section)" }}>
-        <div className="max-w-7xl mx-auto px-8">
+        <div className="max-w-7xl mx-auto px-4 md:px-8">
           <motion.div initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.7, ease: [0.22,1,0.36,1] }} className="mb-14">
             <p className="font-inter text-[9px] tracking-[0.5em] uppercase mb-3" style={{ color: "var(--gold)" }}>Video</p>
             <h2 className="font-playfair text-4xl md:text-5xl" style={{ color: "var(--text-dark)", letterSpacing: "-0.02em" }}>Reels &amp; Lookbooks</h2>

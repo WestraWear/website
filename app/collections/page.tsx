@@ -73,7 +73,7 @@ export default function CollectionsPage() {
           }}
         />
 
-        <div className="relative z-10 max-w-7xl mx-auto px-8 pb-20 w-full">
+        <div className="relative z-10 max-w-7xl mx-auto px-4 md:px-8 pb-12 md:pb-20 w-full">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -123,7 +123,7 @@ export default function CollectionsPage() {
         className="border-b sticky top-[60px] z-30 hidden md:flex"
         style={{ background: "rgba(248,244,238,0.96)", borderColor: "rgba(155,99,53,0.1)", backdropFilter: "blur(16px)" }}
       >
-        <div className="max-w-7xl mx-auto px-8 w-full">
+        <div className="max-w-7xl mx-auto px-4 md:px-8 w-full">
           <div className="flex items-center gap-0">
             {categories.map((cat) => (
               <a
@@ -140,7 +140,7 @@ export default function CollectionsPage() {
       </div>
 
       {/* ── Collection chapters ──────────────────────── */}
-      <div className="max-w-7xl mx-auto px-8">
+      <div className="max-w-7xl mx-auto px-4 md:px-8">
         {categories.map((cat, i) => (
           <motion.section
             key={cat.id}
@@ -149,11 +149,11 @@ export default function CollectionsPage() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 0.8 }}
-            className="py-24 border-b"
+            className="py-12 md:py-24 border-b"
             style={{ borderColor: "rgba(155,99,53,0.12)" }}
           >
             {/* Chapter header row */}
-            <div className="flex items-baseline gap-6 mb-14">
+            <div className="flex items-baseline gap-4 md:gap-6 mb-8 md:mb-14">
               <span
                 className="font-inter text-xs"
                 style={{ color: "var(--text-light)" }}
@@ -251,10 +251,10 @@ export default function CollectionsPage() {
 
       {/* ── Bottom CTA ───────────────────────────────── */}
       <section
-        className="py-28"
+        className="py-14 md:py-28"
         style={{ background: "var(--bg-section)" }}
       >
-        <div className="max-w-7xl mx-auto px-8">
+        <div className="max-w-7xl mx-auto px-4 md:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
             <motion.div
               initial={{ opacity: 0, y: 30 }}

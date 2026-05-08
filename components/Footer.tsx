@@ -19,16 +19,16 @@ export default function Footer() {
         style={{ background: "rgba(184,149,106,0.1)" }}
       />
 
-      <div className="max-w-7xl mx-auto px-8 py-20">
+      <div className="max-w-7xl mx-auto px-4 md:px-8 py-10 md:py-20">
         {/* Main grid */}
-        <div className="grid grid-cols-1 md:grid-cols-[1fr_auto_auto] gap-16 md:gap-24 mb-20">
+        <div className="grid grid-cols-1 md:grid-cols-[1fr_auto_auto] gap-8 md:gap-16 lg:gap-24 mb-10 md:mb-20">
           {/* Brand */}
           <div className="flex flex-col gap-6 max-w-sm">
             <div className="flex items-center gap-4">
               <Image src="/logo_transparent.png" alt="Westra Wear Logo" width={120} height={120} className="h-16 w-16"/>
               <div>
               <span
-                className="font-playfair text-5xl"
+                className="font-playfair text-3xl md:text-5xl"
                 style={{ color: "var(--text-dark)", fontStyle: "italic" }}
               >
                 Westra Wear
@@ -162,16 +162,31 @@ export default function Footer() {
         >
           <p
             className="font-inter text-xs"
-            style={{ color: "rgba(184,149,106,0.3)" }}
+            style={{ color: "var(--text-light)" }}
           >
             © {new Date().getFullYear()} Westra Wear. All rights reserved.
           </p>
-          <p
-            className="font-playfair text-sm italic"
-            style={{ color: "rgba(184,149,106,0.35)" }}
-          >
-            Elegance, Curated.
-          </p>
+          <div className="flex items-center gap-4">
+            <p
+              className="font-playfair text-sm italic"
+              style={{ color: "var(--text-mid)" }}
+            >
+              Elegance, Curated.
+            </p>
+            <span style={{ color: "var(--text-light)" }}>·</span>
+            <p className="font-inter text-xs" style={{ color: "var(--text-light)" }}>
+              Developed by{" "}
+              <a
+                href="https://autom.uk"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:opacity-70 transition-opacity duration-300"
+                style={{ color: "var(--gold)", textDecoration: "none" }}
+              >
+                Automuk
+              </a>
+            </p>
+          </div>
         </div>
       </div>
     </footer>

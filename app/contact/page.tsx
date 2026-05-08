@@ -9,7 +9,7 @@ const channels = [
     idx: "01",
     icon: <FaWhatsapp size={18} />,
     label: "WhatsApp",
-    detail: "+91 98xxx xxxxx",
+    detail: "+91 75011 82583",
     sub: "Fastest response · Typically within an hour",
     href: "https://wa.me/917501182583",
     accent: "#25D366",
@@ -27,7 +27,7 @@ const channels = [
     idx: "03",
     icon: <FaFacebook size={18} />,
     label: "Facebook",
-    detail: "Westra India",
+    detail: "Westra Wear",
     sub: "Live sales every week · Follow for alerts",
     href: "https://www.facebook.com/share/1BWf44pd5s/",
     accent: "#1877F2",
@@ -68,7 +68,7 @@ export default function ContactPage() {
           ✦
         </div>
 
-        <div className="relative z-10 max-w-7xl mx-auto px-8 pb-20 pt-40">
+        <div className="relative z-10 max-w-7xl mx-auto px-4 md:px-8 pb-12 md:pb-20 pt-28 md:pt-40 w-full">
           <motion.p
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
@@ -100,69 +100,72 @@ export default function ContactPage() {
         </div>
       </section>
 
-      {/* Contact Channels — editorial list */}
-      <section className="section-padding" style={{ background: "var(--bg)" }}>
-        <div className="max-w-7xl mx-auto px-8">
+      {/* Contact Channels — compact 2×2 grid */}
+      <section className="py-10" style={{ background: "var(--bg)" }}>
+        <div className="max-w-7xl mx-auto px-4 md:px-8">
           <motion.div
-            initial={{ opacity: 0, y: 24 }}
+            initial={{ opacity: 0, y: 16 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.7, ease: [0.22,1,0.36,1] }}
-            className="mb-14"
+            transition={{ duration: 0.6, ease: [0.22,1,0.36,1] }}
+            className="mb-6"
           >
-            <p className="font-inter text-[9px] tracking-[0.5em] uppercase mb-3" style={{ color: "var(--gold)" }}>Reach Us</p>
-            <h2 className="font-playfair text-4xl md:text-5xl" style={{ color: "var(--text-dark)", letterSpacing: "-0.02em" }}>Contact Channels</h2>
+            <h2 className="font-playfair text-3xl md:text-4xl" style={{ color: "var(--text-dark)", letterSpacing: "-0.02em" }}>Contact Channels</h2>
           </motion.div>
 
-          <div className="flex flex-col">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
             {channels.map((ch, i) => (
               <motion.a
                 key={ch.idx}
                 href={ch.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                initial={{ opacity: 0, y: 16 }}
+                initial={{ opacity: 0, y: 12 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.65, delay: i * 0.08, ease: [0.22,1,0.36,1] }}
-                className="group grid grid-cols-12 gap-8 py-10 border-t items-center"
-                style={{ borderColor: "rgba(155,99,53,0.12)", textDecoration: "none" }}
+                transition={{ duration: 0.5, delay: i * 0.07, ease: [0.22,1,0.36,1] }}
+                className="group relative flex flex-col gap-3 p-4 md:p-5 overflow-hidden"
+                style={{
+                  border: `1px solid ${ch.accent}28`,
+                  background: `${ch.accent}08`,
+                  textDecoration: "none",
+                  transition: "background 0.4s cubic-bezier(0.22,1,0.36,1), border-color 0.4s cubic-bezier(0.22,1,0.36,1)",
+                }}
               >
-                <div className="col-span-1 hidden md:flex">
-                  <span className="font-inter text-xs" style={{ color: "var(--text-light)" }}>{ch.idx}</span>
+                {/* Accent top bar */}
+                <div className="absolute top-0 left-0 right-0 h-[2px]" style={{ background: ch.accent, opacity: 0.7 }} />
+
+                {/* Icon */}
+                <div className="w-8 h-8 flex items-center justify-center rounded-sm" style={{ background: `${ch.accent}18`, color: ch.accent }}>
+                  {ch.icon}
                 </div>
-                <div className="col-span-1 flex items-center justify-center" style={{ color: "var(--text-light)", transition: `color 0.4s cubic-bezier(0.22,1,0.36,1)` }}>
-                  <span className="group-hover:text-current" style={{ transition: `color 0.4s cubic-bezier(0.22,1,0.36,1)` }}>{ch.icon}</span>
+
+                {/* Label + detail */}
+                <div>
+                  <p className="font-playfair text-lg leading-tight mb-0.5" style={{ color: "var(--text-dark)", transition: "color 0.3s" }}>
+                    {ch.label}
+                  </p>
+                  <p className="font-inter text-[10px] truncate" style={{ color: ch.accent }}>{ch.detail}</p>
                 </div>
-                <div className="col-span-10 md:col-span-4">
-                  <h3
-                    className="font-playfair text-2xl md:text-3xl"
-                    style={{ color: "var(--text-dark)", transition: "color 0.4s cubic-bezier(0.22,1,0.36,1)" }}
-                  >
-                    <span className="group-hover:text-[var(--gold)]" style={{ transition: "color 0.4s cubic-bezier(0.22,1,0.36,1)" }}>{ch.label}</span>
-                  </h3>
-                  <p className="font-inter text-sm mt-1" style={{ color: "var(--text-mid)" }}>{ch.detail}</p>
-                </div>
-                <div className="col-span-12 md:col-span-5 md:col-start-8">
-                  <p className="font-inter text-sm leading-7" style={{ color: "var(--text-light)" }} dangerouslySetInnerHTML={{ __html: ch.sub }} />
-                </div>
-                <div className="col-span-1 hidden md:flex justify-end">
-                  <FaArrowRight
-                    size={12}
-                    className="opacity-0 group-hover:opacity-100 group-hover:translate-x-1"
-                    style={{ color: "var(--gold)", transition: "opacity 0.4s cubic-bezier(0.22,1,0.36,1), transform 0.4s cubic-bezier(0.22,1,0.36,1)" }}
-                  />
-                </div>
+
+                {/* Sub */}
+                <p className="font-inter text-[10px] leading-5 hidden md:block" style={{ color: "var(--text-light)" }} dangerouslySetInnerHTML={{ __html: ch.sub }} />
+
+                {/* Arrow */}
+                <FaArrowRight
+                  size={10}
+                  className="absolute bottom-4 right-4 opacity-0 group-hover:opacity-100 group-hover:translate-x-1"
+                  style={{ color: ch.accent, transition: "opacity 0.3s, transform 0.3s" }}
+                />
               </motion.a>
             ))}
-            <div className="border-t" style={{ borderColor: "rgba(155,99,53,0.12)" }} />
           </div>
         </div>
       </section>
 
       {/* Two-col: form + location */}
-      <section className="section-padding" style={{ background: "var(--bg-section)" }}>
-        <div className="max-w-7xl mx-auto px-8 grid grid-cols-1 lg:grid-cols-12 gap-16">
+      <section className="section-padding" style={{ background: "var(--bg-section)", paddingTop: "48px" }}>
+        <div className="max-w-7xl mx-auto px-4 md:px-8 grid grid-cols-1 lg:grid-cols-12 gap-10 md:gap-16">
 
           {/* Inquiry form */}
           <motion.div
@@ -172,7 +175,6 @@ export default function ContactPage() {
             transition={{ duration: 0.8, ease: [0.22,1,0.36,1] }}
             className="lg:col-span-7"
           >
-            <p className="font-inter text-[9px] tracking-[0.5em] uppercase mb-4" style={{ color: "var(--gold)" }}>Enquiry</p>
             <h2 className="font-playfair text-4xl md:text-5xl mb-10" style={{ color: "var(--text-dark)", letterSpacing: "-0.02em" }}>
               Send a Message
             </h2>
@@ -238,12 +240,11 @@ export default function ContactPage() {
             className="lg:col-span-4 lg:col-start-9 flex flex-col gap-10"
           >
             <div>
-              <p className="font-inter text-[9px] tracking-[0.5em] uppercase mb-4" style={{ color: "var(--gold)" }}>Location</p>
               <h3 className="font-playfair text-3xl mb-4" style={{ color: "var(--text-dark)" }}>Find Us</h3>
               <p className="font-inter text-sm leading-8" style={{ color: "var(--text-light)" }}>
-                123 Fashion Street<br />
-                Koramangala, Bengaluru<br />
-                Karnataka – 560034
+                Subhas Sarobar Park, Ghoshal Para<br />
+                Beleghata, Kolkata<br />
+                WB – 700010
               </p>
             </div>
 

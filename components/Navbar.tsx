@@ -51,7 +51,7 @@ export default function Navbar() {
           paddingBottom: scrolled ? "14px" : "24px",
         }}
       >
-        <div className="max-w-7xl mx-auto px-8 flex items-center justify-between">
+        <div className="max-w-7xl mx-auto px-4 md:px-8 flex items-center justify-between">
           {/* Logo */}
           <Link href="/" className="flex">
             <Image src="/logo_transparent.png" alt="Westra Wear Logo" width={120} height={120} className="h-8 w-8"/>

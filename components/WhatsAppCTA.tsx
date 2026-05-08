@@ -20,8 +20,8 @@ export default function WhatsAppCTA() {
         style={{ background: "rgba(184,149,106,0.1)" }}
       />
 
-      <div className="relative z-10 max-w-7xl mx-auto px-8">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
+      <div className="relative z-10 max-w-7xl mx-auto px-4 md:px-8">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-20 items-center">
           {/* Left — headline */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
