@@ -4,10 +4,12 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
-import { FaWhatsapp } from "react-icons/fa";
+import { FaWhatsapp, FaShoppingBag } from "react-icons/fa";
 import Image from "next/image";
+import { useCart } from "@/context/CartContext";
 
 const navLinks = [
+  { label: "Shop", href: "/shop" },
   { label: "Collections", href: "/collections" },
   { label: "About", href: "/about" },
   { label: "Live Sales", href: "/live-sales" },
@@ -19,6 +21,7 @@ export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const pathname = usePathname();
+  const { count, setOpen: openCart } = useCart();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 50);
@@ -85,11 +88,27 @@ export default function Navbar() {
                 {link.label}
               </Link>
             ))}
+            {/* Cart icon */}
+            <button
+              onClick={() => openCart(true)}
+              className="relative p-2 transition-opacity duration-200 hover:opacity-70"
+              aria-label="Open cart"
+            >
+              <FaShoppingBag size={16} style={{ color: "var(--text-mid)" }} />
+              {count > 0 && (
+                <span
+                  className="absolute -top-0.5 -right-0.5 w-4 h-4 rounded-full font-inter text-[9px] flex items-center justify-center"
+                  style={{ background: "var(--gold)", color: "#fff" }}
+                >
+                  {count}
+                </span>
+              )}
+            </button>
             <a
               href="https://wa.me/917501182583"
               target="_blank"
               rel="noopener noreferrer"
-              className="ml-4 px-5 py-2.5 font-inter text-[10px] tracking-[0.25em] uppercase btn-whatsapp flex items-center gap-2"
+              className="ml-2 px-5 py-2.5 font-inter text-[10px] tracking-[0.25em] uppercase btn-whatsapp flex items-center gap-2"
               style={{
                 border: "1px solid rgba(184,149,106,0.5)",
                 color: "var(--gold)",

@@ -4,6 +4,8 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import LenisProvider from "@/components/LenisProvider";
 import ConsoleLogger from "@/components/ConsoleLogger";
+import { CartProvider } from "@/context/CartContext";
+import CartDrawer from "@/components/CartDrawer";
 
 export const metadata: Metadata = {
   title: "Westra — Luxury Women's Fashion",
@@ -25,12 +27,15 @@ export default function RootLayout({
   return (
     <html lang="en" className="h-full scroll-smooth">
       <body className="min-h-full flex flex-col antialiased">
-        <LenisProvider>
-          <ConsoleLogger />
-          <Navbar />
-          <main className="flex-1">{children}</main>
-          <Footer />
-        </LenisProvider>
+        <CartProvider>
+          <LenisProvider>
+            <ConsoleLogger />
+            <Navbar />
+            <main className="flex-1">{children}</main>
+            <Footer />
+            <CartDrawer />
+          </LenisProvider>
+        </CartProvider>
       </body>
     </html>
   );
