@@ -2,9 +2,11 @@
 
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { toast } from "sonner";
 import { useCart } from "@/context/CartContext";
-import { api } from "@/lib/api";
-import { FaWhatsapp, FaArrowRight } from "react-icons/fa";
+import { api, Order } from "@/lib/api";
+import { generateReceipt } from "@/lib/generateReceipt";
+import { FaWhatsapp, FaArrowRight, FaDownload } from "react-icons/fa";
 
 type Props = { open: boolean; onClose: () => void };
 
@@ -21,15 +23,12 @@ export default function CheckoutModal({ open, onClose }: Props) {
     notes: "",
   });
   const [loading, setLoading] = useState(false);
-  const [done, setDone] = useState<string | null>(null);
-  const [error, setError] = useState<string | null>(null);
-
+  const [done, setDone] = useState<Order | null>(null);
   const set = (k: string, v: string) => setForm((f) => ({ ...f, [k]: v }));
 
   const submit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-    setError(null);
     try {
       const order = await api.orders.create({
         ...form,
@@ -37,17 +36,17 @@ export default function CheckoutModal({ open, onClose }: Props) {
         notes: form.notes || undefined,
         items: items.map((i) => ({
           product_id: i.product_id,
-          name: i.name,
+          product_name: i.name,
           size: i.size,
           qty: i.qty,
           price: i.price,
         })),
         total,
       });
-      setDone(order.order_number);
+      setDone(order);
       clear();
     } catch (err) {
-      setError("Something went wrong. Please try WhatsApp or try again.");
+      toast.error("Something went wrong. Please try WhatsApp or try again.");
     } finally {
       setLoading(false);
     }
@@ -65,7 +64,6 @@ export default function CheckoutModal({ open, onClose }: Props) {
 
   const handleClose = () => {
     setDone(null);
-    setError(null);
     onClose();
   };
 
@@ -114,21 +112,30 @@ export default function CheckoutModal({ open, onClose }: Props) {
                         Thank you!
                       </p>
                       <p className="font-inter text-sm mb-1" style={{ color: "var(--text-light)" }}>
-                        Order <strong style={{ color: "var(--gold)" }}>{done}</strong> confirmed.
+                        Order <strong style={{ color: "var(--gold)" }}>{done.order_number}</strong> confirmed.
                       </p>
                       <p className="font-inter text-sm" style={{ color: "var(--text-light)" }}>
                         We'll contact you on WhatsApp to confirm delivery details.
                       </p>
                     </div>
-                    <a
-                      href="https://wa.me/917501182583"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="btn-whatsapp inline-flex items-center gap-2 px-6 py-3 font-inter text-[10px] tracking-[0.25em] uppercase"
-                      style={{ border: "1px solid rgba(184,149,106,0.35)", color: "var(--gold)" }}
-                    >
-                      <FaWhatsapp size={12} /> Chat on WhatsApp
-                    </a>
+                    <div className="flex flex-col sm:flex-row items-center gap-3 w-full max-w-xs">
+                      <button
+                        onClick={() => void generateReceipt(done)}
+                        className="w-full inline-flex items-center justify-center gap-2 px-6 py-3 font-inter text-[10px] tracking-[0.25em] uppercase transition-opacity hover:opacity-70"
+                        style={{ background: "var(--gold)", color: "#fff" }}
+                      >
+                        <FaDownload size={10} /> Download Receipt
+                      </button>
+                      <a
+                        href="https://wa.me/917501182583"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="w-full inline-flex items-center justify-center gap-2 px-6 py-3 font-inter text-[10px] tracking-[0.25em] uppercase transition-opacity hover:opacity-70"
+                        style={{ border: "1px solid rgba(184,149,106,0.35)", color: "var(--gold)" }}
+                      >
+                        <FaWhatsapp size={12} /> Chat on WhatsApp
+                      </a>
+                    </div>
                   </div>
                 ) : (
                   <form onSubmit={submit} className="flex flex-col gap-4">
@@ -209,10 +216,6 @@ export default function CheckoutModal({ open, onClose }: Props) {
                         style={{ border: "1px solid rgba(155,99,53,0.2)", color: "var(--text-dark)" }}
                       />
                     </div>
-
-                    {error && (
-                      <p className="font-inter text-xs" style={{ color: "#E05252" }}>{error}</p>
-                    )}
 
                     <button
                       type="submit"

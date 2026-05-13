@@ -16,7 +16,7 @@ export type Product = {
 
 export type OrderItem = {
   product_id: string;
-  name: string;
+  product_name: string;
   size: string;
   qty: number;
   price: number;

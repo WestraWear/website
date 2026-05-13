@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import { api, Product } from "@/lib/api";
 import { useCart } from "@/context/CartContext";
 import { FaShoppingBag } from "react-icons/fa";
+import { toast } from "sonner";
 
 const CATEGORIES = ["All", "Sarees", "Kurtis", "Ethnic Wear", "Party Collection", "Seasonal"];
 
@@ -24,7 +25,7 @@ function ProductCard({ product }: { product: Product }) {
 
   const handleAdd = () => {
     if (product.sizes.length > 0 && !selectedSize) {
-      alert("Please select a size.");
+      toast.warning("Please select a size before adding to cart.");
       return;
     }
     setAdding(true);
@@ -34,7 +35,9 @@ function ProductCard({ product }: { product: Product }) {
       size: selectedSize || "One Size",
       qty: 1,
       price: product.price,
+      image: product.image_placeholder || undefined,
     });
+    toast.success(`${product.name} added to cart.`);
     setTimeout(() => setAdding(false), 800);
   };
 
@@ -48,15 +51,24 @@ function ProductCard({ product }: { product: Product }) {
       className="group flex flex-col"
       style={{ background: "var(--bg-card)", border: "1px solid rgba(184,149,106,0.1)" }}
     >
-      {/* Image placeholder */}
+      {/* Image */}
       <div
         className="relative aspect-[3/4] overflow-hidden"
         style={{ background: bg }}
       >
-        <div className="absolute inset-0 flex items-center justify-center">
-          <span className="font-playfair text-7xl italic opacity-10"
-            style={{ color: "var(--gold)" }}>W</span>
-        </div>
+        {product.image_placeholder ? (
+          // eslint-disable-next-line @next/next/no-img-element
+          <img
+            src={product.image_placeholder}
+            alt={product.name}
+            className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+          />
+        ) : (
+          <div className="absolute inset-0 flex items-center justify-center">
+            <span className="font-playfair text-7xl italic opacity-10"
+              style={{ color: "var(--gold)" }}>W</span>
+          </div>
+        )}
         {!product.in_stock && (
           <div className="absolute inset-0 flex items-center justify-center"
             style={{ background: "rgba(248,244,238,0.75)" }}>

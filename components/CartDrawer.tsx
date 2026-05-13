@@ -70,11 +70,18 @@ export default function CartDrawer() {
                       className="flex items-start gap-4 py-4 border-b"
                       style={{ borderColor: "rgba(184,149,106,0.08)" }}
                     >
-                      {/* Placeholder thumbnail */}
-                      <div className="w-16 h-20 shrink-0 flex items-center justify-center"
+                      {/* Thumbnail */}
+                      <div className="w-16 h-20 shrink-0 overflow-hidden"
                         style={{ background: "var(--bg-alt)" }}>
-                        <span className="font-playfair text-2xl italic opacity-20"
-                          style={{ color: "var(--gold)" }}>W</span>
+                        {item.image ? (
+                          // eslint-disable-next-line @next/next/no-img-element
+                          <img src={item.image} alt={item.name} className="w-full h-full object-cover" />
+                        ) : (
+                          <div className="w-full h-full flex items-center justify-center">
+                            <span className="font-playfair text-2xl italic opacity-20"
+                              style={{ color: "var(--gold)" }}>W</span>
+                          </div>
+                        )}
                       </div>
 
                       <div className="flex-1 min-w-0">
