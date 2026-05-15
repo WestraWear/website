@@ -5,54 +5,74 @@ import { FaArrowRight, FaWhatsapp, FaFacebook } from "react-icons/fa";
 
 const categories = [
   {
-    id: "sarees",
+    id: "cord-set",
     index: "01",
-    name: "Sarees",
-    tagline: "Timeless Drapes",
+    name: "Cord Set",
+    tagline: "Co-ordinated Perfection",
     description:
-      "From the opulent Kanjivaram to the breezy Chanderi — our saree collection is a love letter to India's most revered textile tradition. Each piece is handpicked for its weave quality, colour palette, and drape.",
+      "Effortlessly matched cord sets that create a complete, polished look in seconds. Crafted in premium fabrics with meticulous attention to fit and finish — the ultimate easy-dressing essential.",
     accent: "#C6A77D",
-    items: ["Banarasi", "Kanjivaram", "Chanderi", "Georgette", "Chiffon", "Cotton Linen"],
+    items: ["Casual Cord Sets", "Printed Sets", "Embroidered Sets", "Solid Tone Sets", "Linen Cord Sets", "Party Cord Sets"],
   },
   {
-    id: "kurtis",
+    id: "kaftan",
     index: "02",
-    name: "Kurtis",
+    name: "Kaftan",
+    tagline: "Breezy, Free & Beautiful",
+    description:
+      "Flowing kaftans that drape with effortless grace — from beach resort mornings to evening gatherings. Each piece is chosen for its fabric quality, movement, and the quiet confidence it carries.",
+    accent: "#9B6335",
+    items: ["Printed Kaftans", "Embroidered Kaftans", "Solid Kaftans", "Short Kaftans", "Maxi Kaftans", "Occasion Kaftans"],
+  },
+  {
+    id: "salwar",
+    index: "03",
+    name: "Salwar",
+    tagline: "Rooted in Grace",
+    description:
+      "Classic salwar silhouettes reimagined with contemporary design sensibility. From everyday comfort wear to festive-ready sets, each piece honours tradition while embracing the modern woman's wardrobe.",
+    accent: "#8C7E72",
+    items: ["Salwar Kameez", "Patiala Sets", "Palazzo Salwar", "Printed Sets", "Embroidered Sets", "Dupatta Sets"],
+  },
+  {
+    id: "two-piece",
+    index: "04",
+    name: "Two Piece",
+    tagline: "Mix, Match & Own It",
+    description:
+      "Versatile two-piece sets designed to take you seamlessly from casual afternoons to evening outings. Mix and match, or wear as a set — endlessly wearable and effortlessly stylish.",
+    accent: "#C6A77D",
+    items: ["Crop Top Sets", "Co-ord Sets", "Printed Two Piece", "Embellished Sets", "Linen Sets", "Festive Two Piece"],
+  },
+  {
+    id: "tops",
+    index: "05",
+    name: "Tops",
     tagline: "Everyday Elegance",
     description:
-      "Versatile, beautiful, and endlessly wearable. Our kurti collection bridges tradition and modernity — crafted for the woman who wants effortless style from morning meetings to evening gatherings.",
+      "A thoughtfully curated range of tops — from relaxed everyday basics to statement embellished styles. The foundation of every great outfit, crafted with care and attention to detail.",
     accent: "#9B6335",
-    items: ["A-Line", "Straight Cut", "Anarkali", "Fusion Layered", "Palazzo Sets", "Dhoti Style"],
+    items: ["Casual Tops", "Printed Tops", "Embroidered Tops", "Crop Tops", "Flowy Tops", "Party Tops"],
   },
   {
-    id: "ethnic",
-    index: "03",
-    name: "Ethnic Wear",
-    tagline: "Cultural Roots",
+    id: "shirts",
+    index: "06",
+    name: "Shirts",
+    tagline: "Polished & Refined",
     description:
-      "Celebrate the richness of India's cultural wardrobe. Salwar kameez, churidar sets, sharara coordinates — each ensemble thoughtfully crafted to honour tradition while embracing today's aesthetic.",
+      "Crisp, feminine shirts crafted in premium fabrics for every occasion. From relaxed linen styles to tailored button-downs — smart dressing made effortless.",
     accent: "#8C7E72",
-    items: ["Salwar Kameez", "Churidar Sets", "Sharara", "Palazzo Co-ords", "Dupatta Sets", "Jacket Style"],
+    items: ["Linen Shirts", "Printed Shirts", "Oversized Shirts", "Embroidered Shirts", "Formal Shirts", "Casual Shirts"],
   },
   {
-    id: "party",
-    index: "04",
-    name: "Party Collection",
-    tagline: "Dress to Mesmerize",
+    id: "frocks",
+    index: "07",
+    name: "Frocks",
+    tagline: "Playful Meets Chic",
     description:
-      "For the nights you want to shine brightest. Our party collection is where drama meets elegance — think rich embellishments, statement silhouettes, and fabrics that move like poetry.",
+      "Beautifully crafted frocks that blend playful charm with modern silhouettes. From flirty minis to elegant maxis — there's a frock for every mood and moment.",
     accent: "#C6A77D",
-    items: ["Lehengas", "Heavy Anarkali", "Net Suits", "Velvet Collection", "Embroidered Sets", "Sequin Wear"],
-  },
-  {
-    id: "seasonal",
-    index: "05",
-    name: "Seasonal",
-    tagline: "Fresh Every Season",
-    description:
-      "Curated drops that celebrate the mood of each season. Refreshing pastels for spring, rich jewel tones for winter festivities — Westra's seasonal edits keep your wardrobe alive and inspired.",
-    accent: "#9B6335",
-    items: ["Spring Edit", "Summer Breezes", "Festive Specials", "Winter Luxe", "Monsoon Essentials", "New Year Glam"],
+    items: ["Casual Frocks", "Printed Frocks", "Embroidered Frocks", "Maxi Frocks", "Party Frocks", "Linen Frocks"],
   },
 ];
 
@@ -132,7 +152,7 @@ export default function CollectionsPage() {
                 className="font-inter text-[10px] tracking-[0.25em] uppercase px-5 py-4 border-r transition-colors duration-200 hover:text-[var(--gold)]"
                 style={{ color: "var(--text-light)", borderColor: "rgba(155,99,53,0.1)" }}
               >
-                {cat.index} {cat.name}
+                {cat.name}
               </a>
             ))}
           </div>
@@ -140,7 +160,7 @@ export default function CollectionsPage() {
       </div>
 
       {/* ── Collection chapters ──────────────────────── */}
-      <div className="max-w-7xl mx-auto px-4 md:px-8">
+      <div className="max-w-7xl mx-auto px-4 md:px-8 mb-20">
         {categories.map((cat, i) => (
           <motion.section
             key={cat.id}
@@ -149,7 +169,7 @@ export default function CollectionsPage() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 0.8 }}
-            className="py-12 md:py-24 border-b"
+            className="py-12 md:py-24 md:pb-8"
             style={{ borderColor: "rgba(155,99,53,0.12)" }}
           >
             {/* Chapter header row */}

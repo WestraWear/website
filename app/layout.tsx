@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Script from "next/script";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -9,13 +10,13 @@ import CartDrawer from "@/components/CartDrawer";
 import { Toaster } from "sonner";
 
 export const metadata: Metadata = {
-  title: "Westra — Luxury Women's Fashion",
+  title: "Westra Wear — Women’s Fashion, Online & Live",
   description:
-    "Westra is a premium women's fashion brand specialising in sarees, kurtis, ethnic wear, and party collections. Shop via Facebook Live and Instagram.",
-  keywords: "Westra, women's fashion, sarees, kurtis, ethnic wear, luxury boutique, Facebook Live shopping",
+    "Westra Wear is a premium women’s fashion brand. Shop cord sets, kaftans, salwars, frocks, tops, shirts and two-piece sets online, or catch our Facebook Live styling sessions.",
+  keywords: "Westra Wear, women's fashion, cord set, kaftan, salwar, frocks, tops, shirts, two piece, online shop, Facebook Live shopping",
   openGraph: {
-    title: "Westra — Luxury Women's Fashion",
-    description: "Premium women's fashion. Live sales on Facebook & Instagram.",
+    title: "Westra Wear — Women’s Fashion, Online & Live",
+    description: "Shop premium women’s fashion online or live on Facebook & Instagram.",
     type: "website",
   },
 };
@@ -28,6 +29,11 @@ export default function RootLayout({
   return (
     <html lang="en" className="h-full scroll-smooth">
       <body className="min-h-full flex flex-col antialiased">
+        {/* Razorpay Checkout SDK */}
+        <Script
+          src="https://checkout.razorpay.com/v1/checkout.js"
+          strategy="lazyOnload"
+        />
         <CartProvider>
           <LenisProvider>
             <ConsoleLogger />

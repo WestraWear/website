@@ -4,15 +4,15 @@ import { motion } from "framer-motion";
 import { FaInstagram, FaPlay, FaArrowRight, FaHeart, FaComment } from "react-icons/fa";
 
 const posts = [
-  { id: 1, category: "Sarees",          tag: "New Arrival",    likes: 312, comments: 28, size: "large"  },
-  { id: 2, category: "Kurtis",          tag: "Best Seller",    likes: 241, comments: 19, size: "small"  },
-  { id: 3, category: "Lehengas",        tag: "Festival Pick",  likes: 489, comments: 44, size: "small"  },
-  { id: 4, category: "Ethnic Sets",     tag: "Trending",       likes: 198, comments: 15, size: "medium" },
-  { id: 5, category: "Designer Sarees", tag: "Exclusive",      likes: 567, comments: 62, size: "large"  },
-  { id: 6, category: "Anarkalis",       tag: "New Collection", likes: 223, comments: 21, size: "small"  },
-  { id: 7, category: "Silk Sarees",     tag: "Heritage Weave", likes: 334, comments: 31, size: "medium" },
-  { id: 8, category: "Sharara Sets",    tag: "Party Wear",     likes: 278, comments: 24, size: "small"  },
-  { id: 9, category: "Palazzo Suits",   tag: "Comfort Chic",   likes: 185, comments: 17, size: "large"  },
+  { id: 1, category: "Cord Set",   tag: "New Arrival",    likes: 312, comments: 28, size: "large"  },
+  { id: 2, category: "Kaftan",     tag: "Best Seller",    likes: 241, comments: 19, size: "small"  },
+  { id: 3, category: "Frocks",     tag: "Festival Pick",  likes: 489, comments: 44, size: "small"  },
+  { id: 4, category: "Salwar",     tag: "Trending",       likes: 198, comments: 15, size: "medium" },
+  { id: 5, category: "Two Piece",  tag: "Exclusive",      likes: 567, comments: 62, size: "large"  },
+  { id: 6, category: "Tops",       tag: "New Collection", likes: 223, comments: 21, size: "small"  },
+  { id: 7, category: "Shirts",     tag: "Polished Pick",  likes: 334, comments: 31, size: "medium" },
+  { id: 8, category: "Frocks",     tag: "Party Wear",     likes: 278, comments: 24, size: "small"  },
+  { id: 9, category: "Cord Set",   tag: "Comfort Chic",   likes: 185, comments: 17, size: "large"  },
 ];
 const gradients = [
   "linear-gradient(145deg,#F0EAE0,#E8E0D4)",
@@ -27,10 +27,10 @@ const gradients = [
 ];
 const accents = ["#C6A77D","#9B6335","#B8906A","#A57850","#C9AD85","#906030","#BE9870","#AC8055","#C4A47B"];
 const reels = [
-  { id: 1, title: "Festive Saree Draping", views: "24K", category: "Sarees"    },
-  { id: 2, title: "Kurti Styling 3 Ways",  views: "18K", category: "Kurtis"    },
-  { id: 3, title: "Lehenga Lookbook",      views: "31K", category: "Lehengas"  },
-  { id: 4, title: "Live Sale Highlights",  views: "42K", category: "Live Sales" },
+  { id: 1, title: "Cord Set Styling 3 Ways",  views: "24K", category: "Cord Set"  },
+  { id: 2, title: "Kaftan Summer Guide",       views: "18K", category: "Kaftan"    },
+  { id: 3, title: "Frock Lookbook",            views: "31K", category: "Frocks"    },
+  { id: 4, title: "Live Sale Highlights",      views: "42K", category: "Live Sales" },
 ];
 const stats = [
   { value: "12K+", label: "Followers"  },

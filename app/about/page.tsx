@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import Image from "next/image";
 import WhatsAppCTA from "@/components/WhatsAppCTA";
 
 const values = [
@@ -32,7 +33,6 @@ const values = [
 
 const stats = [
   { value: "New", label: "Fresh Drop Every Week" },
-  { value: "500+", label: "Happy Customers" },
   { value: "10+", label: "Artisan Partners" },
   { value: "200+", label: "Pieces Curated" },
 ];
@@ -175,7 +175,7 @@ export default function AboutPage() {
         style={{ borderColor: "rgba(155,99,53,0.12)", background: "rgba(155,99,53,0.03)" }}
       >
         <div className="max-w-7xl mx-auto px-4 md:px-8">
-          <div className="grid grid-cols-2 md:grid-cols-4">
+          <div className="grid grid-cols-3">
             {stats.map((s, i) => (
               <motion.div
                 key={s.label}
@@ -200,6 +200,148 @@ export default function AboutPage() {
           </div>
         </div>
       </div>
+
+      {/* ── Founder ──────────────────────────────────── */}
+      <section className="section-padding" style={{ background: "var(--bg)" }}>
+        <div className="max-w-7xl mx-auto px-4 md:px-8">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 md:gap-20 items-center">
+
+            {/* Photo */}
+            <motion.div
+              initial={{ opacity: 0, x: -40 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true, margin: "-80px" }}
+              transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
+              className="lg:col-span-5 relative"
+            >
+              {/* Decorative frame offset */}
+              <div
+                className="absolute -top-4 -left-4 w-full h-full"
+                style={{ border: "1px solid rgba(184,149,106,0.2)" }}
+              />
+              <div className="relative aspect-[3/4] overflow-hidden">
+                <Image
+                  src="https://cdn.westra.in/founder.jpg"
+                  alt="Sweta Nath — Founder of Westra Wear"
+                  fill
+                  className="object-cover"
+                  sizes="(max-width: 1024px) 100vw, 42vw"
+                  priority
+                />
+                {/* Subtle gradient vignette at bottom */}
+                <div
+                  className="absolute bottom-0 left-0 right-0 h-1/3"
+                  style={{
+                    background:
+                      "linear-gradient(to top, rgba(40,32,26,0.3), transparent)",
+                  }}
+                />
+              </div>
+              {/* Floating name tag */}
+              <div
+                className="absolute bottom-6 left-6 right-6 flex items-end justify-between"
+              >
+                <div>
+                  <p
+                    className="font-playfair text-2xl italic"
+                    style={{ color: "#fff", letterSpacing: "-0.01em" }}
+                  >
+                    Sweta Nath
+                  </p>
+                  <p
+                    className="font-inter text-[9px] tracking-[0.35em] uppercase mt-0.5"
+                    style={{ color: "rgba(255,255,255,0.72)" }}
+                  >
+                    Founder &amp; Creative Director
+                  </p>
+                </div>
+                <span
+                  className="font-inter text-[9px] tracking-[0.3em] uppercase px-3 py-1"
+                  style={{
+                    background: "rgba(184,149,106,0.85)",
+                    color: "#fff",
+                    backdropFilter: "blur(6px)",
+                  }}
+                >
+                  Age 25
+                </span>
+              </div>
+            </motion.div>
+
+            {/* Story */}
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-80px" }}
+              transition={{ duration: 0.9, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
+              className="lg:col-span-7 flex flex-col gap-8"
+            >
+              <div className="flex items-center gap-4">
+                <span className="w-8 h-px" style={{ background: "var(--gold)" }} />
+                <span
+                  className="font-inter text-[9px] tracking-[0.5em] uppercase"
+                  style={{ color: "var(--gold)" }}
+                >
+                  The Woman Behind Westra
+                </span>
+              </div>
+
+              <h2
+                className="font-playfair leading-tight"
+                style={{
+                  fontSize: "clamp(36px, 4.5vw, 68px)",
+                  color: "var(--text-dark)",
+                  letterSpacing: "-0.02em",
+                }}
+              >
+                Fashion isn&apos;t just what
+                <br />
+                you wear —{" "}
+                <em style={{ color: "var(--gold)" }}>it&apos;s how you
+                <br />choose to be seen.</em>
+              </h2>
+
+              <div className="flex flex-col gap-5">
+                <p className="font-inter text-sm leading-8" style={{ color: "var(--text-light)" }}>
+                  Sweta Nath founded Westra at 25 with a single conviction: that
+                  women deserve a fashion experience built on trust, taste, and
+                  genuine care — not just transactions. Growing up with a love for
+                  textiles and a sharp eye for silhouettes, she turned a passion
+                  into a living, breathing brand.
+                </p>
+                <p className="font-inter text-sm leading-8" style={{ color: "var(--text-light)" }}>
+                  Every piece at Westra passes through Sweta&apos;s hands first.
+                  She sources directly, styles personally, and shows everything live
+                  — because she believes you should see a garment move before you
+                  decide it&apos;s yours. That intimacy is not a feature; it&apos;s
+                  the whole philosophy.
+                </p>
+              </div>
+
+              {/* Pull-quote */}
+              <blockquote
+                className="border-l-2 pl-6 py-1"
+                style={{ borderColor: "var(--gold)" }}
+              >
+                <p
+                  className="font-cormorant text-xl md:text-2xl italic leading-relaxed"
+                  style={{ color: "var(--text-mid)" }}
+                >
+                  &ldquo;When a woman walks in feeling unsure and leaves glowing —
+                  that&apos;s the whole point.&rdquo;
+                </p>
+                <cite
+                  className="block font-inter text-[10px] tracking-[0.3em] uppercase mt-3 not-italic"
+                  style={{ color: "var(--gold)" }}
+                >
+                  — Sweta Nath
+                </cite>
+              </blockquote>
+            </motion.div>
+
+          </div>
+        </div>
+      </section>
 
       {/* ── Values ───────────────────────────────────── */}
       <section className="section-padding" style={{ background: "var(--bg-section)" }}>

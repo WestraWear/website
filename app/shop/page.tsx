@@ -7,14 +7,16 @@ import { useCart } from "@/context/CartContext";
 import { FaShoppingBag } from "react-icons/fa";
 import { toast } from "sonner";
 
-const CATEGORIES = ["All", "Sarees", "Kurtis", "Ethnic Wear", "Party Collection", "Seasonal"];
+const CATEGORIES = ["All", "Cord Set", "Kaftan", "Salwar", "Two Piece", "Tops", "Shirts", "Frocks"];
 
 const GRADIENTS: Record<string, string> = {
-  Sarees: "linear-gradient(145deg,#F0EAE0,#E8E0D4)",
-  Kurtis: "linear-gradient(145deg,#EDE4D8,#E4DDD5)",
-  "Ethnic Wear": "linear-gradient(145deg,#F4EFE8,#EBE3D9)",
-  "Party Collection": "linear-gradient(145deg,#EAE4DC,#E1D9CE)",
-  Seasonal: "linear-gradient(145deg,#F2EDE5,#E9E1D6)",
+  "Cord Set": "linear-gradient(145deg,#F0EAE0,#E8E0D4)",
+  Kaftan: "linear-gradient(145deg,#EDE4D8,#E4DDD5)",
+  Salwar: "linear-gradient(145deg,#F4EFE8,#EBE3D9)",
+  "Two Piece": "linear-gradient(145deg,#EAE4DC,#E1D9CE)",
+  Tops: "linear-gradient(145deg,#F2EDE5,#E9E1D6)",
+  Shirts: "linear-gradient(145deg,#EEE8E0,#E6DED3)",
+  Frocks: "linear-gradient(145deg,#F3EDE6,#EAE3D8)",
   default: "linear-gradient(145deg,#F0EAE0,#E8E0D4)",
 };
 
@@ -142,7 +144,7 @@ function ProductCard({ product }: { product: Product }) {
         <button
           onClick={handleAdd}
           disabled={!product.in_stock || adding}
-          className="w-full py-3 font-inter text-[10px] tracking-[0.3em] uppercase flex items-center justify-center gap-2 transition-all duration-300 disabled:opacity-40"
+          className="w-full py-3 cursor-pointer font-inter text-[10px] tracking-[0.3em] uppercase flex items-center justify-center gap-2 transition-all duration-300 disabled:opacity-40"
           style={{
             border: "1px solid var(--gold)",
             color: adding ? "#fff" : "var(--gold)",

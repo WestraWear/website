@@ -2,6 +2,7 @@
 
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
+import Link from "next/link";
 import { FaWhatsapp } from "react-icons/fa";
 
 export default function WhatsAppCTA() {
@@ -28,13 +29,14 @@ export default function WhatsAppCTA() {
             animate={isInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
           >
+
             <div className="flex items-center gap-4 mb-8">
               <span className="w-8 h-px" style={{ background: "var(--gold)" }} />
               <span
                 className="font-inter text-[9px] tracking-[0.5em] uppercase"
                 style={{ color: "var(--gold)" }}
               >
-                Personal Shopping
+                Shop & Connect
               </span>
             </div>
             <h2
@@ -55,9 +57,9 @@ export default function WhatsAppCTA() {
               className="font-inter text-sm leading-8 max-w-md"
               style={{ color: "var(--text-light)" }}
             >
-              Can&apos;t make our live session? No problem — message us directly
-              on WhatsApp for personalised styling assistance, custom orders,
-              and exclusive pieces.
+              Browse our full collection online anytime. Prefer a personal touch?
+              Message us on WhatsApp for styling help, custom size queries,
+              or anything not yet listed in the shop.
             </p>
           </motion.div>
 

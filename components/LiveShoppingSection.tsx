@@ -4,9 +4,9 @@ import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 
 const sessions = [
-  { day: "Monday", time: "7:00 PM – 9:00 PM", theme: "Saree Spotlight" },
-  { day: "Wednesday", time: "8:00 PM – 10:00 PM", theme: "Kurti & Ethnic Wear" },
-  { day: "Friday", time: "7:30 PM – 10:00 PM", theme: "Party & Festival Specials" },
+  { day: "Monday", time: "7:00 PM – 9:00 PM", theme: "Cord Sets & Tops" },
+  { day: "Wednesday", time: "8:00 PM – 10:00 PM", theme: "Kaftans & Two Piece" },
+  { day: "Friday", time: "7:30 PM – 10:00 PM", theme: "Frocks, Shirts & Salwar" },
   { day: "Sunday", time: "6:00 PM – 9:00 PM", theme: "New Arrivals & Flash Deals" },
 ];
 
@@ -47,8 +47,9 @@ export default function LiveShoppingSection() {
             className="font-inter text-sm leading-7 max-w-xs"
             style={{ color: "var(--text-light)" }}
           >
-            Experience the joy of curated fashion in real-time. Explore, ask
-            questions, and choose pieces crafted just for you.
+            Experience fashion the personal way — watch each piece styled live,
+            ask questions in real time, and shop with Sweta’s guidance. A perfect
+            complement to our online store.
           </p>
         </motion.div>
 
@@ -174,9 +175,10 @@ export default function LiveShoppingSection() {
               className="font-inter text-sm leading-7"
               style={{ color: "var(--text-light)" }}
             >
-              Can&apos;t join live? Browse past collections anytime on our
-              Instagram gallery, or message us on WhatsApp for personalised
-              styling assistance.
+              Can&apos;t join a live session? Our full catalogue is available
+              to browse and buy anytime in the{" "}
+              <a href="/shop" style={{ color: "var(--gold)" }}>online shop</a>
+              {" "}— or message us on WhatsApp for a personalised recommendation.
             </p>
           </motion.div>
         </div>

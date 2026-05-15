@@ -5,12 +5,12 @@ import { useRef } from "react";
 
 // Simulated instagram posts
 const posts = [
-  { id: 1, label: "Saree Edit", tag: "#WestraSarees", likes: "2.4k" },
-  { id: 2, label: "Kurti Collection", tag: "#WestraKurtis", likes: "1.8k" },
-  { id: 3, label: "Festive Wear", tag: "#WestraFestive", likes: "3.1k" },
-  { id: 4, label: "Party Glam", tag: "#WestraParty", likes: "2.9k" },
-  { id: 5, label: "New Arrivals", tag: "#WestraNew", likes: "1.5k" },
-  { id: 6, label: "Behind the Look", tag: "#WestraStyle", likes: "2.2k" },
+  { id: 1, label: "Cord Set Edit", tag: "#WestraCordSet", likes: "2.4k" },
+  { id: 2, label: "Kaftan Collection", tag: "#WestraKaftan", likes: "1.8k" },
+  { id: 3, label: "Salwar Showcase", tag: "#WestraSalwar", likes: "3.1k" },
+  { id: 4, label: "Two Piece Looks", tag: "#WestraTwoPiece", likes: "2.9k" },
+  { id: 5, label: "Tops & Shirts", tag: "#WestraTops", likes: "1.5k" },
+  { id: 6, label: "Frock Diaries", tag: "#WestraFrocks", likes: "2.2k" },
 ];
 
 export default function InstagramShowcase() {

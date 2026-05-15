@@ -32,6 +32,9 @@ export type Order = {
   items: OrderItem[];
   total: number;
   payment_method: string;
+  payment_status: string;
+  razorpay_order_id?: string;
+  razorpay_payment_id?: string;
   status: string;
   notes?: string;
   created_at: string;
@@ -47,6 +50,40 @@ export type OrderCreate = {
   total: number;
   payment_method: string;
   notes?: string;
+};
+
+export type RazorpayCreateOrderResponse = {
+  order_id: string;
+  amount: number;
+  currency: string;
+  receipt: string;
+  key_id: string;
+};
+
+export type RazorpayVerifyPayload = {
+  razorpay_order_id: string;
+  razorpay_payment_id: string;
+  razorpay_signature: string;
+  customer_name: string;
+  customer_phone: string;
+  customer_email?: string;
+  customer_address: string;
+  items: OrderItem[];
+  total: number;
+  notes?: string;
+};
+
+export type CartValidateItem = {
+  product_id: string;
+  price: number;
+};
+
+export type CartValidateResult = {
+  product_id: string;
+  status: "ok" | "out_of_stock" | "price_changed" | "not_found";
+  name?: string;
+  old_price?: number;
+  new_price?: number;
 };
 
 async function request<T>(path: string, init?: RequestInit): Promise<T> {
@@ -68,9 +105,26 @@ export const api = {
       return request<Product[]>(`/products?${qs}`);
     },
     get: (id: string) => request<Product>(`/products/${id}`),
+    validateCart: (items: CartValidateItem[]) =>
+      request<CartValidateResult[]>("/products/validate-cart", {
+        method: "POST",
+        body: JSON.stringify(items),
+      }),
   },
   orders: {
     create: (body: OrderCreate) =>
       request<Order>("/orders", { method: "POST", body: JSON.stringify(body) }),
+  },
+  payments: {
+    createOrder: (amount_paise: number, receipt?: string) =>
+      request<RazorpayCreateOrderResponse>("/payments/create-order", {
+        method: "POST",
+        body: JSON.stringify({ amount_paise, currency: "INR", receipt }),
+      }),
+    verify: (payload: RazorpayVerifyPayload) =>
+      request<Order>("/payments/verify", {
+        method: "POST",
+        body: JSON.stringify(payload),
+      }),
   },
 };

@@ -39,12 +39,11 @@ export default function AboutSection() {
 
             {/* Stats row */}
             <div
-              className="grid grid-cols-3 border-t border-b py-8 gap-6"
+              className="grid grid-cols-2 border-t border-b py-8 gap-6"
               style={{ borderColor: "rgba(184,149,106,0.12)" }}
             >
               {[
                 { v: "New", l: "Launched" },
-                { v: "2k+", l: "Customers" },
                 { v: "500+", l: "Pieces" },
               ].map((s) => (
                 <div key={s.l}>
@@ -105,18 +104,18 @@ export default function AboutSection() {
               style={{ color: "var(--text-light)" }}
             >
               We began as a curated boutique driven by a passion for celebrating
-              femininity through fashion. From the delicate threadwork of a Banarasi
-              saree to the modern cut of a fusion kurti — every piece in our
-              collection tells a story of craftsmanship, culture, and confidence.
+              femininity through fashion. From a flowing kaftan to a perfectly
+              tailored cord set — every piece in our collection tells a story of
+              craftsmanship, culture, and confidence.
             </p>
 
             <p
               className="font-inter text-sm leading-8"
               style={{ color: "var(--text-light)" }}
             >
-              Today, we bring that same curation to your screens — live, personal,
-              and intimate — through our Facebook Live sessions and Instagram,
-              creating a shopping experience as refined as our collections.
+              Today you can shop our full catalogue online or experience the
+              warmth of our Facebook Live sessions — where Sweta styles each
+              piece personally and helps you find exactly what’s right for you.
             </p>
 
             {/* Pillars */}
@@ -124,7 +123,7 @@ export default function AboutSection() {
               className="grid grid-cols-1 gap-0 mt-4 border-t"
               style={{ borderColor: "rgba(184,149,106,0.12)" }}
             >
-              {["Craftsmanship", "Authenticity", "Personal Curation"].map(
+              {["Craftsmanship", "Online Shop", "Live Styling"].map(
                 (val, i) => (
                   <div
                     key={val}

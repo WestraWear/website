@@ -3,6 +3,7 @@ import { FaFacebook, FaInstagram, FaWhatsapp, FaYoutube } from "react-icons/fa";
 import Image from "next/image";
 
 const footerLinks = [
+  { label: "Shop", href: "/shop" },
   { label: "Collections", href: "/collections" },
   { label: "About", href: "/about" },
   { label: "Live Sales", href: "/live-sales" },
@@ -45,9 +46,9 @@ export default function Footer() {
               className="font-inter text-sm leading-7"
               style={{ color: "var(--text-light)" }}
             >
-              A premium women&apos;s fashion brand celebrating elegance,
-              femininity, and the art of dressing beautifully. Shop with us
-              live on Facebook and Instagram.
+              A premium women’s fashion brand celebrating elegance and
+              femininity. Shop our curated collection online or experience
+              real-time styling through our Facebook Live sessions.
             </p>
             <div className="flex gap-3 mt-2">
               {[

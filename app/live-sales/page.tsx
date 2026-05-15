@@ -8,9 +8,9 @@ import { FaFacebook, FaInstagram, FaArrowRight, FaChevronLeft, FaChevronRight, F
 
 const LIVE_DAYS: Record<number, { theme: string; time: string; accent: string; shortTheme: string }> = {
   0: { theme: "New Arrivals & Flash Sales", shortTheme: "New Arrivals",   time: "6:00 – 9:00 PM",   accent: "#A5A8D4" },
-  1: { theme: "Saree Spotlight",            shortTheme: "Saree Spotlight", time: "7:00 – 9:00 PM",   accent: "#C6A77D" },
-  3: { theme: "Kurti & Ethnic Wear",        shortTheme: "Kurti & Ethnic",  time: "8:00 – 10:00 PM",  accent: "#D4BC9A" },
-  5: { theme: "Party & Festival Specials",  shortTheme: "Party Specials",  time: "7:30 – 10:00 PM",  accent: "#C6A77D" },
+  1: { theme: "Cord Sets & Tops",           shortTheme: "Cord Sets & Tops", time: "7:00 – 9:00 PM",   accent: "#C6A77D" },
+  3: { theme: "Kaftans & Two Piece",         shortTheme: "Kaftan & Two Piece", time: "8:00 – 10:00 PM",  accent: "#D4BC9A" },
+  5: { theme: "Frocks, Shirts & Salwar",     shortTheme: "Frocks & Shirts",  time: "7:30 – 10:00 PM",  accent: "#C6A77D" },
 };
 
 const howItWorks = [

@@ -7,7 +7,7 @@ import CheckoutModal from "./CheckoutModal";
 import { FaWhatsapp } from "react-icons/fa";
 
 export default function CartDrawer() {
-  const { items, remove, update, total, count, open, setOpen } = useCart();
+  const { items, remove, update, total, count, open, setOpen, validating } = useCart();
   const [checkout, setCheckout] = useState(false);
 
   return (
@@ -44,6 +44,9 @@ export default function CartDrawer() {
                   <p className="font-inter text-[10px] tracking-[0.2em] uppercase mt-0.5"
                     style={{ color: "var(--text-light)" }}>
                     {count} {count === 1 ? "item" : "items"}
+                    {validating && (
+                      <span className="ml-2 opacity-60">· Checking stock…</span>
+                    )}
                   </p>
                 </div>
                 <button
@@ -89,6 +92,17 @@ export default function CartDrawer() {
                           style={{ color: "var(--text-dark)" }}>{item.name}</p>
                         <p className="font-inter text-[10px] tracking-[0.15em] uppercase mb-2"
                           style={{ color: "var(--gold)" }}>Size: {item.size}</p>
+                        {item.warning && (
+                          <p className="font-inter text-[10px] tracking-[0.12em] uppercase mb-1 px-2 py-0.5 inline-block"
+                            style={{
+                              background: item.warning === "out_of_stock"
+                                ? "rgba(239,68,68,0.12)"
+                                : "rgba(234,179,8,0.15)",
+                              color: item.warning === "out_of_stock" ? "#ef4444" : "#ca8a04",
+                            }}>
+                            {item.warning === "out_of_stock" ? "Out of stock" : "Price updated"}
+                          </p>
+                        )}
                         <p className="font-playfair text-sm mb-3"
                           style={{ color: "var(--text-mid)" }}>₹{item.price.toLocaleString()}</p>
 
@@ -135,9 +149,16 @@ export default function CartDrawer() {
                       ₹{total.toLocaleString()}
                     </span>
                   </div>
+                  {items.some((i) => i.warning === "out_of_stock") && (
+                    <p className="font-inter text-[10px] tracking-[0.1em] text-center"
+                      style={{ color: "#ef4444" }}>
+                      Remove out-of-stock items to proceed
+                    </p>
+                  )}
                   <button
+                    disabled={items.some((i) => i.warning === "out_of_stock")}
                     onClick={() => { setOpen(false); setCheckout(true); }}
-                    className="w-full py-4 font-inter text-[10px] tracking-[0.35em] uppercase flex items-center justify-center gap-2"
+                    className="w-full py-4 font-inter text-[10px] tracking-[0.35em] uppercase flex items-center justify-center gap-2 disabled:opacity-40 disabled:cursor-not-allowed"
                     style={{
                       background: "var(--gold)",
                       color: "#fff",

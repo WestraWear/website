@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import Link from "next/link";
-import { FaWhatsapp } from "react-icons/fa";
+
 
 export default function HeroSection() {
   return (
@@ -95,12 +95,19 @@ export default function HeroSection() {
             className="font-inter text-sm leading-8 max-w-sm"
             style={{ color: "var(--text-light)" }}
           >
-            We curate and deliver exquisite sarees, kurtis, ethnic wear, and
-            seasonal collections crafted for the modern woman who values grace
-            and identity.
+            Shop our curated kaftans, cord sets, salwars, frocks and more
+            online — or catch us live on Facebook for an intimate,
+            real-time styling experience.
           </p>
 
           <div className="flex flex-wrap items-center gap-4 md:gap-6 shrink-0">
+            <Link
+              href="/shop"
+              className="px-6 py-3 font-inter text-[10px] tracking-[0.3em] uppercase flex items-center gap-2 transition-opacity duration-300 hover:opacity-80"
+              style={{ background: "var(--gold)", color: "#fff" }}
+            >
+              Shop Now →
+            </Link>
             <Link
               href="/collections"
               className="group font-inter text-[10px] tracking-[0.3em] uppercase flex items-center gap-3 transition-opacity duration-300 hover:opacity-60"
@@ -109,19 +116,6 @@ export default function HeroSection() {
               <span>Explore Collections</span>
               <span className="transition-transform duration-300 group-hover:translate-x-1.5">→</span>
             </Link>
-            <a
-              href="https://wa.me/917501182583"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="px-6 py-3 font-inter text-[10px] tracking-[0.3em] uppercase btn-whatsapp flex items-center gap-2"
-              style={{
-                border: "1px solid rgba(184,149,106,0.35)",
-                color: "var(--gold)",
-              }}
-            >
-              <FaWhatsapp size={12} />
-              WhatsApp Us
-            </a>
           </div>
         </motion.div>
       </div>
@@ -137,9 +131,9 @@ export default function HeroSection() {
         <div className="max-w-7xl mx-auto px-4 md:px-8">
           <div className="grid grid-cols-3">
               {[
-              { label: "Fresh Drops Weekly", value: "New" },
-              { label: "Happy Customers", value: "2000+" },
-              { label: "Collections", value: "500+" },
+              { label: "Shop Online", value: "New" },
+              { label: "Live Sales Hosted", value: "50+" },
+              { label: "Pieces Curated", value: "200+" },
             ].map((stat, i) => (
               <div
                 key={stat.label}
