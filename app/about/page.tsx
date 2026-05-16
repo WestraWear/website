@@ -221,7 +221,7 @@ export default function AboutPage() {
               />
               <div className="relative aspect-[3/4] overflow-hidden">
                 <Image
-                  src="https://cdn.westra.in/founder.jpg"
+                  src="https://cdn.westra.in/founder.png"
                   alt="Sweta Nath — Founder of Westra Wear"
                   fill
                   className="object-cover"
@@ -255,16 +255,6 @@ export default function AboutPage() {
                     Founder &amp; Creative Director
                   </p>
                 </div>
-                <span
-                  className="font-inter text-[9px] tracking-[0.3em] uppercase px-3 py-1"
-                  style={{
-                    background: "rgba(184,149,106,0.85)",
-                    color: "#fff",
-                    backdropFilter: "blur(6px)",
-                  }}
-                >
-                  Age 25
-                </span>
               </div>
             </motion.div>
 
