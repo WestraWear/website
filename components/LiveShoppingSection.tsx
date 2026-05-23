@@ -1,10 +1,22 @@
 "use client";
 
 import { motion, useInView } from "framer-motion";
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
+
+const BASE = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:8000/api/v1";
+
+interface FBLive {
+  id: string;
+  title?: string;
+  status: string; // "LIVE", "SCHEDULED_UNPUBLISHED", "VOD", etc.
+  planned_start_time?: string;
+  permalink_url?: string;
+  embed_html?: string;
+  thumbnail_url?: string;
+}
 
 const sessions = [
-  { day: "Monday", time: "7:00 PM – 9:00 PM", theme: "Cord Sets & Tops" },
+  { day: "Monday", time: "7:00 PM – 9:00 PM", theme: "Co-ord Sets & Tops" },
   { day: "Wednesday", time: "8:00 PM – 10:00 PM", theme: "Kaftans & Two Piece" },
   { day: "Friday", time: "7:30 PM – 10:00 PM", theme: "Frocks, Shirts & Salwar" },
   { day: "Sunday", time: "6:00 PM – 9:00 PM", theme: "New Arrivals & Flash Deals" },
@@ -13,6 +25,19 @@ const sessions = [
 export default function LiveShoppingSection() {
   const ref = useRef<HTMLDivElement>(null);
   const isInView = useInView(ref, { once: true, margin: "-80px" });
+
+  const [lives, setLives] = useState<FBLive[]>([]);
+
+  useEffect(() => {
+    fetch(`${BASE}/social/facebook/lives`)
+      .then((r) => (r.ok ? r.json() : Promise.reject()))
+      .then((data: FBLive[]) => setLives(data))
+      .catch(() => { /* no-op: falls back to static schedule UI */ });
+  }, []);
+
+  // Separate currently live vs. upcoming streams
+  const currentLive = lives.find((v) => v.status === "LIVE");
+  const upcoming = lives.filter((v) => v.status !== "LIVE" && v.status !== "VOD").slice(0, 3);
 
   return (
     <section
@@ -121,13 +146,13 @@ export default function LiveShoppingSection() {
                   animate={{ scale: [1, 1.4, 1], opacity: [1, 0.6, 1] }}
                   transition={{ duration: 1.8, repeat: Infinity }}
                   className="w-2 h-2 rounded-full"
-                  style={{ background: "#E05252" }}
+                  style={{ background: currentLive ? "#E05252" : "#B89569" }}
                 />
                 <span
                   className="font-inter text-[10px] tracking-[0.35em] uppercase"
                   style={{ color: "var(--text-mid)" }}
                 >
-                  Broadcasting Live
+                  {currentLive ? "Live Now" : "Broadcasting Live"}
                 </span>
               </div>
               <p
@@ -137,38 +162,69 @@ export default function LiveShoppingSection() {
                 &ldquo;Join us live and discover your next favourite piece.&rdquo;
               </p>
               <div className="flex flex-col gap-3">
-                <a
-                  href="https://www.facebook.com/share/1BWf44pd5s/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="group flex items-center justify-between px-5 py-4 transition-all duration-300 hover:opacity-70"
-                  style={{ border: "1px solid rgba(184,149,106,0.2)", color: "var(--champagne)" }}
-                >
-                  <span className="font-inter text-[10px] tracking-[0.25em] uppercase">
-                    Watch on Facebook
-                  </span>
-                  <span className="transition-transform duration-300 group-hover:translate-x-1.5 text-sm">
-                    →
-                  </span>
-                </a>
-                <a
-                  href="https://www.instagram.com/westra_wear"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="group flex items-center justify-between px-5 py-4 transition-all duration-300 hover:opacity-70"
-                  style={{
-                    background: "rgba(184,149,106,0.08)",
-                    color: "var(--gold)",
-                  }}
-                >
-                  <span className="font-inter text-[10px] tracking-[0.25em] uppercase">
-                    Shop on Instagram
-                  </span>
-                  <span className="transition-transform duration-300 group-hover:translate-x-1.5 text-sm">
-                    →
-                  </span>
-                </a>
-              </div>
+                  {/* If a live stream is currently broadcasting, link directly to it */}
+                  {currentLive?.permalink_url ? (
+                    <a
+                      href={currentLive.permalink_url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="group flex items-center justify-between px-5 py-4 transition-all duration-300 hover:opacity-70"
+                      style={{ border: "1px solid rgba(184,149,106,0.2)", color: "var(--champagne)" }}
+                    >
+                      <span className="font-inter text-[10px] tracking-[0.25em] uppercase">
+                        Watch Live Now
+                      </span>
+                      <span className="transition-transform duration-300 group-hover:translate-x-1.5 text-sm">→</span>
+                    </a>
+                  ) : (
+                    <a
+                      href="https://www.facebook.com/share/1BWf44pd5s/"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="group flex items-center justify-between px-5 py-4 transition-all duration-300 hover:opacity-70"
+                      style={{ border: "1px solid rgba(184,149,106,0.2)", color: "var(--champagne)" }}
+                    >
+                      <span className="font-inter text-[10px] tracking-[0.25em] uppercase">
+                        Watch on Facebook
+                      </span>
+                      <span className="transition-transform duration-300 group-hover:translate-x-1.5 text-sm">→</span>
+                    </a>
+                  )}
+
+                  {/* Upcoming scheduled streams */}
+                  {upcoming.length > 0 && upcoming.map((v) => (
+                    <a
+                      key={v.id}
+                      href={v.permalink_url ?? "https://www.facebook.com/share/1BWf44pd5s/"}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="group flex flex-col gap-1 px-5 py-4 transition-all duration-300 hover:opacity-70"
+                      style={{ border: "1px solid rgba(184,149,106,0.1)", color: "var(--champagne)" }}
+                    >
+                      <span className="font-inter text-[10px] tracking-[0.25em] uppercase">
+                        {v.title ?? "Upcoming Live"}
+                      </span>
+                      {v.planned_start_time && (
+                        <span className="font-inter text-[9px] opacity-60">
+                          {new Date(v.planned_start_time).toLocaleString()}
+                        </span>
+                      )}
+                    </a>
+                  ))}
+
+                  <a
+                    href="https://www.instagram.com/westra_wear"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group flex items-center justify-between px-5 py-4 transition-all duration-300 hover:opacity-70"
+                    style={{ background: "rgba(184,149,106,0.08)", color: "var(--gold)" }}
+                  >
+                    <span className="font-inter text-[10px] tracking-[0.25em] uppercase">
+                      Shop on Instagram
+                    </span>
+                    <span className="transition-transform duration-300 group-hover:translate-x-1.5 text-sm">→</span>
+                  </a>
+                </div>
             </div>
 
             <p

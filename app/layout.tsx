@@ -12,8 +12,8 @@ import { Toaster } from "sonner";
 export const metadata: Metadata = {
   title: "Westra Wear — Women’s Fashion, Online & Live",
   description:
-    "Westra Wear is a premium women’s fashion brand. Shop cord sets, kaftans, salwars, frocks, tops, shirts and two-piece sets online, or catch our Facebook Live styling sessions.",
-  keywords: "Westra Wear, women's fashion, cord set, kaftan, salwar, frocks, tops, shirts, two piece, online shop, Facebook Live shopping",
+    "Westra Wear is a premium women’s fashion brand. Shop co-ord sets, kaftans, salwars, frocks, tops, shirts and two-piece sets online, or catch our Facebook Live styling sessions.",
+  keywords: "Westra Wear, women's fashion, co-ord set, kaftan, salwar, frocks, tops, shirts, two piece, online shop, Facebook Live shopping",
   openGraph: {
     title: "Westra Wear — Women’s Fashion, Online & Live",
     description: "Shop premium women’s fashion online or live on Facebook & Instagram.",

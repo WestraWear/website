@@ -1,20 +1,25 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { FaInstagram, FaPlay, FaArrowRight, FaHeart, FaComment } from "react-icons/fa";
+import { api, type InstagramPost } from "@/lib/api";
 
-const posts = [
-  { id: 1, category: "Cord Set",   tag: "New Arrival",    likes: 312, comments: 28, size: "large"  },
-  { id: 2, category: "Kaftan",     tag: "Best Seller",    likes: 241, comments: 19, size: "small"  },
-  { id: 3, category: "Frocks",     tag: "Festival Pick",  likes: 489, comments: 44, size: "small"  },
-  { id: 4, category: "Salwar",     tag: "Trending",       likes: 198, comments: 15, size: "medium" },
-  { id: 5, category: "Two Piece",  tag: "Exclusive",      likes: 567, comments: 62, size: "large"  },
-  { id: 6, category: "Tops",       tag: "New Collection", likes: 223, comments: 21, size: "small"  },
-  { id: 7, category: "Shirts",     tag: "Polished Pick",  likes: 334, comments: 31, size: "medium" },
-  { id: 8, category: "Frocks",     tag: "Party Wear",     likes: 278, comments: 24, size: "small"  },
-  { id: 9, category: "Cord Set",   tag: "Comfort Chic",   likes: 185, comments: 17, size: "large"  },
+// cycling size pattern for the masonry grid
+const SIZE_PATTERN: Array<"large" | "medium" | "small"> = [
+  "large", "small", "small", "medium", "large", "small", "medium", "small", "large",
 ];
-const gradients = [
+
+type IgStats = { followers_count: number | null; media_count: number | null; username: string | null };
+
+function fmtCount(n: number | null | undefined): string {
+  if (n == null) return "—";
+  if (n >= 1_000_000) return (n / 1_000_000).toFixed(1).replace(/\.0$/, "") + "M+";
+  if (n >= 1_000) return (n / 1_000).toFixed(1).replace(/\.0$/, "") + "K+";
+  return String(n);
+}
+
+const GRADIENTS = [
   "linear-gradient(145deg,#F0EAE0,#E8E0D4)",
   "linear-gradient(145deg,#EDE4D8,#E4DDD5)",
   "linear-gradient(145deg,#F4EFE8,#EBE3D9)",
@@ -25,21 +30,42 @@ const gradients = [
   "linear-gradient(145deg,#EAE4DC,#E1D9CE)",
   "linear-gradient(145deg,#F3EDE5,#ECE4D8)",
 ];
-const accents = ["#C6A77D","#9B6335","#B8906A","#A57850","#C9AD85","#906030","#BE9870","#AC8055","#C4A47B"];
-const reels = [
-  { id: 1, title: "Cord Set Styling 3 Ways",  views: "24K", category: "Cord Set"  },
-  { id: 2, title: "Kaftan Summer Guide",       views: "18K", category: "Kaftan"    },
-  { id: 3, title: "Frock Lookbook",            views: "31K", category: "Frocks"    },
-  { id: 4, title: "Live Sale Highlights",      views: "42K", category: "Live Sales" },
-];
-const stats = [
-  { value: "12K+", label: "Followers"  },
-  { value: "800+", label: "Posts"      },
-  { value: "4.9★", label: "Avg Rating" },
-  { value: "50+",  label: "Brands"     },
-];
+
+function aspectRatio(size: "large" | "medium" | "small") {
+  if (size === "large")  return "3/4";
+  if (size === "medium") return "1/1";
+  return "4/5";
+}
+
+function shortCaption(caption?: string) {
+  if (!caption) return "";
+  const first = caption.split("\n")[0];
+  return first.length > 52 ? first.slice(0, 52) + "…" : first;
+}
 
 export default function InstagramGalleryPage() {
+  const [posts,   setPosts]   = useState<InstagramPost[]>([]);
+  const [reels,   setReels]   = useState<InstagramPost[]>([]);
+  const [stats,   setStats]   = useState<IgStats | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error,   setError]   = useState<string | null>(null);
+
+  useEffect(() => {
+    Promise.all([
+      api.social.instagramFeed(24),
+      api.social.instagramStats().catch(() => null),
+    ])
+      .then(([items, igStats]) => {
+        setPosts(items.filter((m) => m.media_type !== "VIDEO"));
+        setReels(items.filter((m) => m.media_type === "VIDEO"));
+        setStats(igStats);
+      })
+      .catch((err: Error) => {
+        setError(err.message.includes("503") ? "not_configured" : err.message);
+      })
+      .finally(() => setLoading(false));
+  }, []);
+
   return (
     <div style={{ background: "var(--bg)" }}>
 
@@ -70,7 +96,11 @@ export default function InstagramGalleryPage() {
       {/* Stats */}
       <section style={{ background: "var(--bg-alt)", borderTop: "1px solid rgba(155,99,53,0.1)", borderBottom: "1px solid rgba(155,99,53,0.1)" }}>
         <div className="max-w-7xl mx-auto px-4 md:px-8 py-8 grid grid-cols-2 md:grid-cols-4">
-          {stats.map((s, i) => (
+          {([
+            { value: fmtCount(stats?.followers_count), label: "Followers" },
+            { value: fmtCount(stats?.media_count),     label: "Posts" },
+            { value: stats?.username ? `@${stats.username}` : "@westra_wear", label: "Handle" },
+          ] as { value: string; label: string }[]).map((s, i) => (
             <motion.div key={s.label} initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6, delay: i * 0.07, ease: [0.22,1,0.36,1] }} className="flex flex-col items-center py-4 gap-1 border-r last:border-r-0" style={{ borderColor: "rgba(155,99,53,0.1)" }}>
               <span className="font-playfair text-3xl md:text-4xl" style={{ color: "var(--gold)" }}>{s.value}</span>
               <span className="font-inter text-[9px] tracking-[0.3em] uppercase" style={{ color: "var(--text-light)" }}>{s.label}</span>
@@ -79,7 +109,7 @@ export default function InstagramGalleryPage() {
         </div>
       </section>
 
-      {/* Gallery Grid */}
+      {/* ── Gallery Grid ── */}
       <section className="section-padding" style={{ background: "var(--bg)" }}>
         <div className="max-w-7xl mx-auto px-4 md:px-8">
           <motion.div initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.7, ease: [0.22,1,0.36,1] }} className="flex items-end justify-between mb-14">
@@ -92,37 +122,98 @@ export default function InstagramGalleryPage() {
             </a>
           </motion.div>
 
-          <div className="columns-2 md:columns-3 gap-4">
-            {posts.map((post, i) => (
-              <motion.div
-                key={post.id}
-                initial={{ opacity: 0, y: 24 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.7, delay: i * 0.06, ease: [0.22,1,0.36,1] }}
-                className="group relative mb-4 overflow-hidden cursor-pointer break-inside-avoid"
-                style={{ background: gradients[i], aspectRatio: post.size === "large" ? "3/4" : post.size === "medium" ? "1/1" : "4/5" }}
-              >
-                <div className="absolute inset-0 img-overlay-wrap group-hover:scale-105" style={{ transition: "transform 0.7s cubic-bezier(0.22,1,0.36,1)" }} />
-                <div className="absolute inset-0" style={{ borderLeft: `3px solid ${accents[i]}40` }} />
-                <div className="absolute top-4 left-4 z-10">
-                  <span className="font-inter text-[8px] tracking-[0.3em] uppercase px-2 py-1" style={{ background: "rgba(253,252,250,0.85)", color: "var(--text-dark)" }}>{post.category}</span>
+          {/* Skeleton */}
+          {loading && (
+            <div className="columns-2 md:columns-3 gap-4">
+              {SIZE_PATTERN.map((size, i) => (
+                <div key={i} className="mb-4 break-inside-avoid animate-pulse rounded-sm" style={{ aspectRatio: aspectRatio(size), background: GRADIENTS[i % GRADIENTS.length] }} />
+              ))}
+            </div>
+          )}
+
+          {/* Not connected */}
+          {!loading && error === "not_configured" && (
+            <div className="flex flex-col items-center py-20 gap-4 text-center">
+              <FaInstagram size={32} style={{ color: "var(--gold)", opacity: 0.4 }} />
+              <p className="font-cormorant text-xl italic" style={{ color: "var(--text-mid)" }}>Instagram is not yet connected.</p>
+              <p className="font-inter text-[10px] tracking-[0.2em] uppercase" style={{ color: "var(--text-light)" }}>
+                Connect your account in the dashboard to show live posts here.
+              </p>
+            </div>
+          )}
+
+          {/* Generic error */}
+          {!loading && error && error !== "not_configured" && (
+            <p className="text-center font-inter text-sm py-16" style={{ color: "var(--text-light)" }}>
+              Could not load posts. Please try again later.
+            </p>
+          )}
+
+          {/* Real posts grid */}
+          {!loading && !error && (
+            <>
+              {posts.length === 0 ? (
+                <p className="text-center font-inter text-sm py-16" style={{ color: "var(--text-light)" }}>No posts found.</p>
+              ) : (
+                <div className="columns-2 md:columns-3 gap-4">
+                  {posts.map((post, i) => {
+                    const size = SIZE_PATTERN[i % SIZE_PATTERN.length];
+                    const imgSrc = post.media_url ?? post.thumbnail_url;
+                    return (
+                      <motion.a
+                        href={post.permalink}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        key={post.id}
+                        initial={{ opacity: 0, y: 24 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 0.7, delay: (i % 9) * 0.06, ease: [0.22,1,0.36,1] }}
+                        className="group relative mb-4 overflow-hidden cursor-pointer break-inside-avoid block"
+                        style={{ background: GRADIENTS[i % GRADIENTS.length], aspectRatio: aspectRatio(size) }}
+                      >
+                        {imgSrc && (
+                          // eslint-disable-next-line @next/next/no-img-element
+                          <img
+                            src={imgSrc}
+                            alt={shortCaption(post.caption) || "Instagram post"}
+                            className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-105"
+                          />
+                        )}
+                        {post.media_type === "CAROUSEL_ALBUM" && (
+                          <div className="absolute top-3 right-3 z-10">
+                            <svg viewBox="0 0 20 20" fill="white" className="w-4 h-4 drop-shadow">
+                              <rect x="2" y="6" width="10" height="10" rx="1.5" opacity="0.7" />
+                              <rect x="6" y="2" width="10" height="10" rx="1.5" />
+                            </svg>
+                          </div>
+                        )}
+                        <div className="absolute inset-0 z-20 flex flex-col justify-end p-5 opacity-0 group-hover:opacity-100 transition-opacity duration-300" style={{ background: "linear-gradient(to top,rgba(40,32,26,0.78) 0%,transparent 60%)" }}>
+                          {post.caption && (
+                            <p className="font-playfair text-white text-sm leading-snug mb-2 line-clamp-2">
+                              {shortCaption(post.caption)}
+                            </p>
+                          )}
+                          <div className="flex gap-4">
+                            {post.like_count !== undefined && (
+                              <span className="flex items-center gap-1.5 font-inter text-[10px] text-white/80"><FaHeart size={10} /> {post.like_count.toLocaleString()}</span>
+                            )}
+                            {post.comments_count !== undefined && (
+                              <span className="flex items-center gap-1.5 font-inter text-[10px] text-white/80"><FaComment size={10} /> {post.comments_count.toLocaleString()}</span>
+                            )}
+                          </div>
+                        </div>
+                      </motion.a>
+                    );
+                  })}
                 </div>
-                <div className="hover-overlay absolute inset-0 z-20 flex flex-col justify-end p-5 opacity-0 group-hover:opacity-100" style={{ background: "linear-gradient(to top,rgba(40,32,26,0.75) 0%,transparent 60%)" }}>
-                  <p className="font-playfair text-white text-base mb-1">{post.category}</p>
-                  <span className="font-inter text-[8px] tracking-[0.25em] uppercase px-2 py-0.5 self-start mb-3" style={{ background: `${accents[i]}99`, color: "#fff" }}>{post.tag}</span>
-                  <div className="flex gap-4">
-                    <span className="flex items-center gap-1.5 font-inter text-[10px] text-white/80"><FaHeart size={10} /> {post.likes}</span>
-                    <span className="flex items-center gap-1.5 font-inter text-[10px] text-white/80"><FaComment size={10} /> {post.comments}</span>
-                  </div>
-                </div>
-              </motion.div>
-            ))}
-          </div>
+              )}
+            </>
+          )}
         </div>
       </section>
 
-      {/* Reels */}
+      {/* ── Reels ── */}
       <section className="section-padding" style={{ background: "var(--bg-section)" }}>
         <div className="max-w-7xl mx-auto px-4 md:px-8">
           <motion.div initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.7, ease: [0.22,1,0.36,1] }} className="mb-14">
@@ -130,32 +221,67 @@ export default function InstagramGalleryPage() {
             <h2 className="font-playfair text-4xl md:text-5xl" style={{ color: "var(--text-dark)", letterSpacing: "-0.02em" }}>Reels &amp; Lookbooks</h2>
           </motion.div>
 
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            {reels.map((reel, i) => (
-              <motion.div
-                key={reel.id}
-                initial={{ opacity: 0, y: 24 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.7, delay: i * 0.07, ease: [0.22,1,0.36,1] }}
-                className="group relative overflow-hidden cursor-pointer"
-                style={{ aspectRatio: "9/16", background: gradients[i + 4] }}
-              >
-                <div className="absolute inset-0 flex flex-col justify-between p-4">
-                  <span className="font-inter text-[8px] tracking-[0.3em] uppercase self-start px-2 py-1" style={{ background: "rgba(253,252,250,0.85)", color: "var(--text-dark)" }}>{reel.category}</span>
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <div className="play-btn w-14 h-14 rounded-full flex items-center justify-center shadow-lg" style={{ background: "rgba(253,252,250,0.9)", color: "var(--gold)" }}>
-                      <FaPlay size={14} style={{ marginLeft: "2px" }} />
+          {loading && (
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+              {[0, 1, 2, 3].map((i) => (
+                <div key={i} className="animate-pulse rounded-sm" style={{ aspectRatio: "9/16", background: GRADIENTS[(i + 4) % GRADIENTS.length] }} />
+              ))}
+            </div>
+          )}
+
+          {!loading && !error && reels.length > 0 && (
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+              {reels.map((reel, i) => (
+                <motion.a
+                  href={reel.permalink}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  key={reel.id}
+                  initial={{ opacity: 0, y: 24 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.7, delay: i * 0.07, ease: [0.22,1,0.36,1] }}
+                  className="group relative overflow-hidden cursor-pointer block"
+                  style={{ aspectRatio: "9/16", background: GRADIENTS[(i + 4) % GRADIENTS.length] }}
+                >
+                  {(reel.thumbnail_url ?? reel.media_url) && (
+                    // eslint-disable-next-line @next/next/no-img-element
+                    <img
+                      src={(reel.thumbnail_url ?? reel.media_url)!}
+                      alt={shortCaption(reel.caption) || "Instagram Reel"}
+                      className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-105"
+                    />
+                  )}
+                  <div className="absolute inset-0 flex flex-col justify-between p-4" style={{ background: "linear-gradient(to top,rgba(40,32,26,0.65) 0%,transparent 50%)" }}>
+                    <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+                      <div className="play-btn w-14 h-14 rounded-full flex items-center justify-center shadow-lg opacity-90 group-hover:opacity-100 transition-opacity" style={{ background: "rgba(253,252,250,0.9)", color: "var(--gold)" }}>
+                        <FaPlay size={14} style={{ marginLeft: "2px" }} />
+                      </div>
+                    </div>
+                    <div className="relative z-10 mt-auto">
+                      {reel.caption && (
+                        <p className="font-playfair text-sm md:text-base leading-snug mb-1 text-white line-clamp-2">
+                          {shortCaption(reel.caption)}
+                        </p>
+                      )}
+                      <div className="flex gap-3">
+                        {reel.like_count !== undefined && (
+                          <span className="flex items-center gap-1 font-inter text-[9px] text-white/70"><FaHeart size={9} /> {reel.like_count.toLocaleString()}</span>
+                        )}
+                        {reel.comments_count !== undefined && (
+                          <span className="flex items-center gap-1 font-inter text-[9px] text-white/70"><FaComment size={9} /> {reel.comments_count.toLocaleString()}</span>
+                        )}
+                      </div>
                     </div>
                   </div>
-                  <div>
-                    <p className="font-playfair text-sm md:text-base leading-snug mb-1" style={{ color: "var(--text-dark)" }}>{reel.title}</p>
-                    <p className="font-inter text-[9px]" style={{ color: "var(--text-light)" }}>{reel.views} views</p>
-                  </div>
-                </div>
-              </motion.div>
-            ))}
-          </div>
+                </motion.a>
+              ))}
+            </div>
+          )}
+
+          {!loading && !error && reels.length === 0 && (
+            <p className="text-center font-inter text-sm py-10" style={{ color: "var(--text-light)" }}>No reels found.</p>
+          )}
 
           <motion.div initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6, delay: 0.3, ease: [0.22,1,0.36,1] }} className="mt-12 flex justify-center">
             <a href="https://www.instagram.com/westra_wear" target="_blank" rel="noopener noreferrer" className="btn-instagram inline-flex items-center gap-2 px-8 py-4 font-inter text-[10px] tracking-[0.35em] uppercase" style={{ border: "1px solid rgba(155,99,53,0.35)", color: "var(--text-mid)" }}>

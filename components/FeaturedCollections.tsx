@@ -6,9 +6,9 @@ import Link from "next/link";
 
 const collections = [
   {
-    name: "Cord Set",
+    name: "Co-ord Set",
     tagline: "Co-ordinated perfection",
-    description: "Effortlessly matched cord sets for a polished, put-together look every day.",
+    description: "Effortlessly matched co-ord sets for a polished, put-together look every day.",
     index: "01",
     href: "/collections#cord-set",
   },

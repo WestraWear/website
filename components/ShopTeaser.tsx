@@ -6,7 +6,7 @@ import Link from "next/link";
 import { api, Product } from "@/lib/api";
 
 const CATEGORY_ACCENTS: Record<string, string> = {
-  "Cord Set":  "#C6A77D",
+  "Co-ord Set":  "#C6A77D",
   Kaftan:      "#9B6335",
   Salwar:      "#8C7E72",
   "Two Piece": "#C6A77D",

@@ -1,5 +1,17 @@
 const BASE = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:8000/api/v1";
 
+export type InstagramPost = {
+  id: string;
+  media_type: "IMAGE" | "VIDEO" | "CAROUSEL_ALBUM";
+  media_url?: string;
+  thumbnail_url?: string;
+  permalink: string;
+  caption?: string;
+  timestamp: string;
+  like_count?: number;
+  comments_count?: number;
+};
+
 export type Product = {
   id: string;
   name: string;
@@ -126,5 +138,11 @@ export const api = {
         method: "POST",
         body: JSON.stringify(payload),
       }),
+  },
+  social: {
+    instagramStats: () =>
+      request<{ followers_count: number | null; media_count: number | null; username: string | null }>("/social/instagram/stats"),
+    instagramFeed: (limit = 24) =>
+      request<InstagramPost[]>(`/social/instagram/feed?limit=${limit}`),
   },
 };

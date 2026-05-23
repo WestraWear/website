@@ -95,7 +95,7 @@ export default function HeroSection() {
             className="font-inter text-sm leading-8 max-w-sm"
             style={{ color: "var(--text-light)" }}
           >
-            Shop our curated kaftans, cord sets, salwars, frocks and more
+            Shop our curated kaftans, co-ord sets, salwars, frocks and more
             online — or catch us live on Facebook for an intimate,
             real-time styling experience.
           </p>

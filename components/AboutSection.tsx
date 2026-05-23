@@ -105,7 +105,7 @@ export default function AboutSection() {
             >
               We began as a curated boutique driven by a passion for celebrating
               femininity through fashion. From a flowing kaftan to a perfectly
-              tailored cord set — every piece in our collection tells a story of
+              tailored co-ord set — every piece in our collection tells a story of
               craftsmanship, culture, and confidence.
             </p>
 

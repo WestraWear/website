@@ -7,12 +7,12 @@ const categories = [
   {
     id: "cord-set",
     index: "01",
-    name: "Cord Set",
+    name: "Co-ord Set",
     tagline: "Co-ordinated Perfection",
     description:
-      "Effortlessly matched cord sets that create a complete, polished look in seconds. Crafted in premium fabrics with meticulous attention to fit and finish — the ultimate easy-dressing essential.",
+      "Effortlessly matched co-ord sets that create a complete, polished look in seconds. Crafted in premium fabrics with meticulous attention to fit and finish — the ultimate easy-dressing essential.",
     accent: "#C6A77D",
-    items: ["Casual Cord Sets", "Printed Sets", "Embroidered Sets", "Solid Tone Sets", "Linen Cord Sets", "Party Cord Sets"],
+    items: ["Casual co-ord Sets", "Printed Sets", "Embroidered Sets", "Solid Tone Sets", "Linen co-ord Sets", "Party co-ord Sets"],
   },
   {
     id: "kaftan",

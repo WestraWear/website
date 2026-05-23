@@ -1,28 +1,71 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { FaFacebook, FaInstagram, FaArrowRight, FaChevronLeft, FaChevronRight, FaWhatsapp } from "react-icons/fa";
 
-// ── Data ────────────────────────────────────────────────────────────
+const BASE = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:8000/api/v1";
 
-const LIVE_DAYS: Record<number, { theme: string; time: string; accent: string; shortTheme: string }> = {
-  0: { theme: "New Arrivals & Flash Sales", shortTheme: "New Arrivals",   time: "6:00 – 9:00 PM",   accent: "#A5A8D4" },
-  1: { theme: "Cord Sets & Tops",           shortTheme: "Cord Sets & Tops", time: "7:00 – 9:00 PM",   accent: "#C6A77D" },
-  3: { theme: "Kaftans & Two Piece",         shortTheme: "Kaftan & Two Piece", time: "8:00 – 10:00 PM",  accent: "#D4BC9A" },
-  5: { theme: "Frocks, Shirts & Salwar",     shortTheme: "Frocks & Shirts",  time: "7:30 – 10:00 PM",  accent: "#C6A77D" },
-};
+const ACCENT_CYCLE = ["#C6A77D", "#D4BC9A", "#A5A8D4", "#B8906A", "#9B8560"];
 
-const howItWorks = [
-  { step: "01", title: "Follow Our Page",      desc: "Follow Westra on Facebook or Instagram to get notified when we go live." },
-  { step: "02", title: "Join the Live",         desc: "Tune in at scheduled time. Watch us showcase each piece up close in real light." },
-  { step: "03", title: "Comment to Claim",      desc: "Type 'Mine' or your size in the comments to claim a piece during the live." },
-  { step: "04", title: "Confirm on WhatsApp",   desc: "We'll reach out on WhatsApp to confirm your order, measurements, and delivery." },
-];
+// ── Types ────────────────────────────────────────────────────────────
+
+interface FBLive {
+  id: string;
+  title?: string;
+  status: string; // "LIVE" | "SCHEDULED_UNPUBLISHED" | "VOD" | etc.
+  planned_start_time?: string; // ISO-8601
+  permalink_url?: string;
+}
+
+/** Map of "YYYY-MM-DD" → live event info shown on the calendar */
+interface CalendarEvent {
+  title: string;
+  time: string;
+  accent: string;
+  permalink?: string;
+  status: string;
+}
+
+// ── Helpers ─────────────────────────────────────────────────────────
+
+function toDateKey(iso: string): string {
+  // Return "YYYY-MM-DD" in local time
+  const d = new Date(iso);
+  return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
+}
+
+function formatTime(iso: string): string {
+  return new Date(iso).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
+}
+
+function buildCalendarMap(lives: FBLive[]): Map<string, CalendarEvent> {
+  const map = new Map<string, CalendarEvent>();
+  let accentIdx = 0;
+  for (const live of lives) {
+    if (!live.planned_start_time) continue;
+    const key = toDateKey(live.planned_start_time);
+    if (!map.has(key)) {
+      map.set(key, {
+        title: live.title ?? "Westra Live",
+        time: formatTime(live.planned_start_time),
+        accent: ACCENT_CYCLE[accentIdx % ACCENT_CYCLE.length],
+        permalink: live.permalink_url,
+        status: live.status,
+      });
+      accentIdx++;
+    }
+  }
+  return map;
+}
 
 // ── Calendar ────────────────────────────────────────────────────────
 
-function LiveCalendar() {
+interface LiveCalendarProps {
+  events: Map<string, CalendarEvent>;
+}
+
+function LiveCalendar({ events }: LiveCalendarProps) {
   const today = new Date();
   const [viewDate, setViewDate] = useState(new Date(today.getFullYear(), today.getMonth(), 1));
   const [hovered, setHovered] = useState<number | null>(null);
@@ -31,7 +74,7 @@ function LiveCalendar() {
   const month = viewDate.getMonth();
   const monthName = new Intl.DateTimeFormat("en-US", { month: "long" }).format(viewDate);
 
-  const firstDow   = new Date(year, month, 1).getDay();
+  const firstDow    = new Date(year, month, 1).getDay();
   const daysInMonth = new Date(year, month + 1, 0).getDate();
   const cells: (number | null)[] = [
     ...Array(firstDow).fill(null),
@@ -41,6 +84,20 @@ function LiveCalendar() {
 
   const isToday = (d: number) =>
     d === today.getDate() && month === today.getMonth() && year === today.getFullYear();
+
+  const cellKey = (d: number) =>
+    `${year}-${String(month + 1).padStart(2, "0")}-${String(d).padStart(2, "0")}`;
+
+  // Unique events shown in legend (only those visible this month)
+  const legendEvents: CalendarEvent[] = [];
+  const seenTitles = new Set<string>();
+  for (let d = 1; d <= daysInMonth; d++) {
+    const ev = events.get(cellKey(d));
+    if (ev && !seenTitles.has(ev.title)) {
+      legendEvents.push(ev);
+      seenTitles.add(ev.title);
+    }
+  }
 
   return (
     <div className="overflow-visible" style={{ border: "1px solid rgba(155,99,53,0.16)", background: "var(--bg-card)" }}>
@@ -73,7 +130,7 @@ function LiveCalendar() {
             key={d}
             className="py-3 text-center font-inter text-[9px] tracking-[0.3em] uppercase"
             style={{
-              color: LIVE_DAYS[idx] ? "var(--gold)" : "var(--text-light)",
+              color: "var(--text-light)",
               borderRight: idx < 6 ? "1px solid rgba(155,99,53,0.06)" : undefined,
             }}
           >
@@ -85,10 +142,8 @@ function LiveCalendar() {
       {/* Cells */}
       <div className="grid grid-cols-7">
         {cells.map((day, idx) => {
-          const dow      = idx % 7;
-          const liveInfo = day ? LIVE_DAYS[dow] : null;
-          const isLive   = !!liveInfo;
-          const todayCell = day ? isToday(day) : false;
+          const liveInfo   = day ? events.get(cellKey(day)) ?? null : null;
+          const todayCell  = day ? isToday(day) : false;
 
           return (
             <div
@@ -99,7 +154,7 @@ function LiveCalendar() {
                 borderColor: "rgba(155,99,53,0.06)",
                 background: todayCell ? "rgba(155,99,53,0.05)" : undefined,
               }}
-              onMouseEnter={() => day && isLive ? setHovered(idx) : undefined}
+              onMouseEnter={() => day && liveInfo ? setHovered(idx) : undefined}
               onMouseLeave={() => setHovered(null)}
             >
               {day && (
@@ -108,49 +163,60 @@ function LiveCalendar() {
                   <span
                     className="font-inter text-xs self-end leading-none"
                     style={{
-                      color: todayCell ? "var(--gold)" : isLive ? "var(--text-dark)" : "var(--text-light)",
-                      fontWeight: todayCell ? 700 : isLive ? 600 : 400,
+                      color: todayCell ? "var(--gold)" : liveInfo ? "var(--text-dark)" : "var(--text-light)",
+                      fontWeight: todayCell ? 700 : liveInfo ? 600 : 400,
                     }}
                   >
                     {day}
                   </span>
 
                   {/* Live badge */}
-                  {isLive && (
+                  {liveInfo && (
                     <div
                       className="mt-auto rounded-sm px-1.5 py-1.5 hidden sm:flex flex-col gap-0.5"
                       style={{ background: `${liveInfo.accent}1A`, borderLeft: `2px solid ${liveInfo.accent}` }}
                     >
                       <span className="font-inter text-[8px] font-semibold leading-tight" style={{ color: "var(--text-dark)" }}>
-                        {liveInfo.shortTheme}
+                        {liveInfo.title}
                       </span>
                       <span className="font-inter text-[8px] leading-tight" style={{ color: "var(--text-light)" }}>
-                        {liveInfo.time.split("–")[0].trim()}
+                        {liveInfo.time}
                       </span>
                     </div>
                   )}
                   {/* Mobile dot */}
-                  {isLive && (
+                  {liveInfo && (
                     <div className="mt-auto sm:hidden flex justify-center">
                       <div className="w-1.5 h-1.5 rounded-full" style={{ background: liveInfo.accent }} />
                     </div>
                   )}
 
                   {/* Tooltip */}
-                  {isLive && hovered === idx && (
+                  {liveInfo && hovered === idx && (
                     <div
                       className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 z-50 w-52 p-4 shadow-xl pointer-events-none"
                       style={{ background: "var(--bg-card)", border: `1px solid ${liveInfo.accent}50` }}
                     >
                       <p className="font-inter text-[9px] tracking-[0.3em] uppercase mb-1.5" style={{ color: "var(--gold)" }}>
-                        Facebook Live
+                        {liveInfo.status === "LIVE" ? "🔴 Live Now" : "Facebook Live"}
                       </p>
                       <p className="font-playfair text-base leading-tight mb-1" style={{ color: "var(--text-dark)" }}>
-                        {liveInfo.theme}
+                        {liveInfo.title}
                       </p>
                       <p className="font-inter text-[10px]" style={{ color: "var(--text-light)" }}>
                         {liveInfo.time}
                       </p>
+                      {liveInfo.permalink && (
+                        <a
+                          href={liveInfo.permalink}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="font-inter text-[9px] underline mt-2 block pointer-events-auto"
+                          style={{ color: "var(--gold)" }}
+                        >
+                          View on Facebook →
+                        </a>
+                      )}
                     </div>
                   )}
                 </div>
@@ -160,24 +226,42 @@ function LiveCalendar() {
         })}
       </div>
 
-      {/* Legend */}
-      <div className="px-8 py-5 border-t flex flex-wrap gap-5" style={{ borderColor: "rgba(155,99,53,0.08)", background: "var(--bg-section)" }}>
-        {Object.values(LIVE_DAYS).map((info) => (
-          <div key={info.theme} className="flex items-center gap-2">
-            <div className="w-2 h-2 rounded-full flex-shrink-0" style={{ background: info.accent }} />
-            <span className="font-inter text-[9px] tracking-wide" style={{ color: "var(--text-mid)" }}>
-              {info.shortTheme}
-            </span>
-          </div>
-        ))}
-      </div>
+      {/* Legend — only shown when there are events this month */}
+      {legendEvents.length > 0 && (
+        <div className="px-8 py-5 border-t flex flex-wrap gap-5" style={{ borderColor: "rgba(155,99,53,0.08)", background: "var(--bg-section)" }}>
+          {legendEvents.map((ev) => (
+            <div key={ev.title} className="flex items-center gap-2">
+              <div className="w-2 h-2 rounded-full flex-shrink-0" style={{ background: ev.accent }} />
+              <span className="font-inter text-[9px] tracking-wide" style={{ color: "var(--text-mid)" }}>
+                {ev.title}
+              </span>
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 }
 
+const howItWorks = [
+  { step: "01", title: "Follow Our Page",    desc: "Follow Westra on Facebook or Instagram to get notified when we go live." },
+  { step: "02", title: "Join the Live",       desc: "Tune in at the scheduled time. Watch us showcase each piece up close in real light." },
+  { step: "03", title: "Comment to Claim",    desc: "Type 'Mine' or your size in the comments to claim a piece during the live." },
+  { step: "04", title: "Confirm on WhatsApp", desc: "We'll reach out on WhatsApp to confirm your order, measurements, and delivery." },
+];
+
 // ── Page ────────────────────────────────────────────────────────────
 
 export default function LiveSalesPage() {
+  const [events, setEvents] = useState<Map<string, CalendarEvent>>(new Map());
+
+  useEffect(() => {
+    fetch(`${BASE}/social/facebook/lives`)
+      .then((r) => (r.ok ? r.json() : Promise.reject()))
+      .then((lives: FBLive[]) => setEvents(buildCalendarMap(lives)))
+      .catch(() => setEvents(new Map())); // empty on error — no fallback
+  }, []);
+
   return (
     <div style={{ background: "var(--bg)" }}>
 
@@ -269,7 +353,7 @@ export default function LiveSalesPage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, delay: 0.4, ease: [0.22, 1, 0.36, 1] }}
           >
-            <LiveCalendar />
+            <LiveCalendar events={events} />
           </motion.div>
         </div>
       </section>

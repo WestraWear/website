@@ -103,7 +103,7 @@ export default function Testimonials() {
               className="group py-10 border-b"
               style={{ borderColor: "rgba(184,149,106,0.1)" }}
             >
-              <div className="grid grid-cols-1 md:grid-cols-[80px_1fr_200px] gap-6 md:gap-12 items-start">
+              <div className="grid grid-cols-1 md:grid-cols-[80px_1fr] gap-6 md:gap-12 items-start">
                 {/* Index */}
                 <span
                   className="font-inter text-[11px]"
@@ -123,38 +123,6 @@ export default function Testimonials() {
                   >
                     &ldquo;{t.review}&rdquo;
                   </p>
-                  <div className="flex items-center gap-4">
-                    <div
-                      className="w-6 h-px"
-                      style={{ background: "var(--gold)" }}
-                    />
-                    <p
-                      className="font-inter text-sm"
-                      style={{ color: "var(--text-mid)" }}
-                    >
-                      {t.name}
-                    </p>
-                    <span style={{ color: "var(--text-light)", fontSize: "12px" }}>—</span>
-                    <p
-                      className="font-inter text-xs"
-                      style={{ color: "var(--text-light)" }}
-                    >
-                      {t.location}
-                    </p>
-                  </div>
-                </div>
-
-                {/* Piece tag */}
-                <div className="md:text-right">
-                  <span
-                    className="inline-block font-inter text-[10px] tracking-[0.2em] uppercase px-4 py-2"
-                    style={{
-                      border: "1px solid rgba(184,149,106,0.2)",
-                      color: "var(--gold)",
-                    }}
-                  >
-                    {t.piece}
-                  </span>
                 </div>
               </div>
             </motion.div>

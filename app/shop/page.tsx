@@ -7,10 +7,10 @@ import { useCart } from "@/context/CartContext";
 import { FaShoppingBag } from "react-icons/fa";
 import { toast } from "sonner";
 
-const CATEGORIES = ["All", "Cord Set", "Kaftan", "Salwar", "Two Piece", "Tops", "Shirts", "Frocks"];
+const CATEGORIES = ["All", "Co-ord Set", "Kaftan", "Salwar", "Two Piece", "Tops", "Shirts", "Frocks"];
 
 const GRADIENTS: Record<string, string> = {
-  "Cord Set": "linear-gradient(145deg,#F0EAE0,#E8E0D4)",
+  "Co-ord Set": "linear-gradient(145deg,#F0EAE0,#E8E0D4)",
   Kaftan: "linear-gradient(145deg,#EDE4D8,#E4DDD5)",
   Salwar: "linear-gradient(145deg,#F4EFE8,#EBE3D9)",
   "Two Piece": "linear-gradient(145deg,#EAE4DC,#E1D9CE)",
