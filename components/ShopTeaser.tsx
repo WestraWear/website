@@ -106,16 +106,18 @@ function ProductCard({ product, index }: { product: Product; index: number }) {
   );
 }
 
-export default function ShopTeaser() {
+export default function ShopTeaser({ initialProducts }: { initialProducts?: Product[] }) {
   const ref = useRef<HTMLDivElement>(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
-  const [products, setProducts] = useState<Product[]>([]);
+  const [products, setProducts] = useState<Product[]>(initialProducts ?? []);
 
   useEffect(() => {
+    if (initialProducts) return;
     api.products
       .list({ in_stock: true })
       .then((data) => setProducts(data.slice(0, 8)))
       .catch(() => {});
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // If no products returned from API, show a clean placeholder state
