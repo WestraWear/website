@@ -23,6 +23,13 @@ export default function Navbar() {
   const pathname = usePathname();
   const { count, setOpen: openCart } = useCart();
 
+  const heroPages = ["/", "/collections", "/about", "/instagram-gallery"];
+  const isHero = heroPages.includes(pathname) && !scrolled;
+  const navTextColor = isHero ? "rgba(255,255,255,0.9)" : "var(--text-mid)";
+  const logoTitleColor = isHero ? "#fff" : "var(--text-dark)";
+  const logoSubColor = isHero ? "rgba(255,255,255,0.55)" : "var(--text-light)";
+  const hamburgerColor = isHero ? "#fff" : "var(--text-dark)";
+
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 50);
     window.addEventListener("scroll", onScroll, { passive: true });
@@ -52,22 +59,23 @@ export default function Navbar() {
           WebkitBackdropFilter: scrolled ? "blur(20px)" : "none",
           paddingTop: scrolled ? "14px" : "24px",
           paddingBottom: scrolled ? "14px" : "24px",
+          transition: "background 0.4s, padding 0.4s, border-color 0.4s",
         }}
       >
         <div className="max-w-7xl mx-auto px-4 md:px-8 flex items-center justify-between">
-          {/* Logo */}
-          <Link href="/" className="flex">
+          {/* Logo — hidden on hero */}
+          <Link href="/" className={`flex transition-opacity duration-500 ${isHero ? "opacity-0 pointer-events-none" : "opacity-100"}`}>
             <Image src="/logo_transparent.png" alt="Westra Wear Logo" width={120} height={120} className="h-8 w-8"/>
             <div className="group flex flex-col items-start leading-none">
               <span
                 className="font-playfair text-[22px] tracking-[0.12em] transition-opacity duration-300 group-hover:opacity-70"
-                style={{ color: "var(--text-dark)", fontStyle: "italic" }}
+                style={{ color: logoTitleColor, fontStyle: "italic" }}
               >
                 Westra Wear
               </span>
               <span
                 className="font-inter text-[8px] tracking-[0.4em] uppercase mt-0.5"
-                style={{ color: "var(--text-light)", letterSpacing: "0.35em" }}
+                style={{ color: logoSubColor, letterSpacing: "0.35em" }}
               >
                 Define your presence
               </span>
@@ -82,7 +90,7 @@ export default function Navbar() {
                 href={link.href}
                 className="gold-underline font-inter text-[10px] tracking-[0.22em] uppercase transition-colors duration-300"
                 style={{
-                  color: pathname === link.href ? "var(--gold)" : "var(--text-mid)",
+                  color: pathname === link.href ? (isHero ? "var(--gold-light)" : "var(--gold)") : navTextColor,
                 }}
               >
                 {link.label}
@@ -94,7 +102,7 @@ export default function Navbar() {
               className="relative p-2 transition-opacity duration-200 hover:opacity-70"
               aria-label="Open cart"
             >
-              <FaShoppingBag size={16} style={{ color: "var(--text-mid)" }} />
+              <FaShoppingBag size={16} style={{ color: navTextColor }} />
               {count > 0 && (
                 <span
                   className="absolute -top-0.5 -right-0.5 w-4 h-4 rounded-full font-inter text-[9px] flex items-center justify-center"
@@ -110,8 +118,8 @@ export default function Navbar() {
               rel="noopener noreferrer"
               className="ml-2 px-5 py-2.5 font-inter text-[10px] tracking-[0.25em] uppercase btn-whatsapp flex items-center gap-2"
               style={{
-                border: "1px solid rgba(184,149,106,0.5)",
-                color: "var(--gold)",
+                border: isHero ? "1px solid rgba(255,255,255,0.4)" : "1px solid rgba(184,149,106,0.5)",
+                color: isHero ? "rgba(255,255,255,0.9)" : "var(--gold)",
               }}
             >
               <FaWhatsapp size={12} />
@@ -128,21 +136,21 @@ export default function Navbar() {
             <span
               className="block w-5 h-px transition-all duration-300"
               style={{
-                background: "var(--text-dark)",
+                background: hamburgerColor,
                 transform: menuOpen ? "rotate(45deg) translate(3.5px, 3.5px)" : "",
               }}
             />
             <span
               className="block w-5 h-px transition-all duration-300"
               style={{
-                background: "var(--text-dark)",
+                background: hamburgerColor,
                 opacity: menuOpen ? 0 : 1,
               }}
             />
             <span
               className="block w-5 h-px transition-all duration-300"
               style={{
-                background: "var(--text-dark)",
+                background: hamburgerColor,
                 transform: menuOpen ? "rotate(-45deg) translate(3.5px, -3.5px)" : "",
               }}
             />

@@ -1,15 +1,41 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { useRef } from "react";
+import { motion, useScroll, useTransform } from "framer-motion";
 import Link from "next/link";
 
 
 export default function HeroSection() {
+  const sectionRef = useRef<HTMLElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start start", "end start"],
+  });
+  const bgY = useTransform(scrollYProgress, [0, 1], ["0%", "30%"]);
+
   return (
     <section
+      ref={sectionRef}
       className="relative min-h-screen flex flex-col justify-end overflow-hidden"
       style={{ background: "var(--bg)" }}
     >
+      {/* Parallax background */}
+      <motion.div
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          backgroundImage: "url('https://scontent.fccu10-1.fna.fbcdn.net/v/t39.30808-6/700079005_122108593898695822_2803132509224644353_n.jpg?_nc_cat=107&ccb=1-7&_nc_sid=833d8c&_nc_ohc=Nsu01m3BLPUQ7kNvwGBGJPl&_nc_oc=Adq5YLOe9mkR0v9J1OPt49D7L7noI2psRebcEFqSmb4ukY8Eb_CYFgiR-1zqL2-Btrw&_nc_zt=23&_nc_ht=scontent.fccu10-1.fna&_nc_gid=OxeTO7_3-BEfXcyA2qEt1w&_nc_ss=7b2a8&oh=00_Af7JWvWuMYdYI6VftOhnEbgbCvz5912v8A3jN8dy1c_TMA&oe=6A182D81')",
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          backgroundRepeat: "no-repeat",
+          y: bgY,
+          scale: 1.15,
+        }}
+      />
+      {/* Background overlay */}
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{ background: "rgba(20,14,10,0.55)" }}
+      />
       {/* Large decorative background index number */}
       <div
         className="absolute inset-0 flex items-center justify-center pointer-events-none select-none"
@@ -44,7 +70,7 @@ export default function HeroSection() {
       >
         <span
           className="font-inter text-[9px] tracking-[0.4em] uppercase"
-          style={{ color: "var(--text-light)" }}
+          style={{ color: "rgba(255,255,255,0.5)" }}
         >
           Premium Women&apos;s Fashion
         </span>
@@ -65,7 +91,7 @@ export default function HeroSection() {
           className="font-playfair leading-none mb-8"
           style={{
             fontSize: "clamp(56px, 9vw, 148px)",
-            color: "var(--text-dark)",
+            color: "#fff",
             letterSpacing: "-0.02em",
           }}
         >
@@ -73,7 +99,7 @@ export default function HeroSection() {
           <br />
           <em
             style={{
-              color: "var(--gold)",
+              color: "#E8C49A",
               fontStyle: "italic",
               fontSize: "0.85em",
               letterSpacing: "-0.01em",
@@ -89,11 +115,11 @@ export default function HeroSection() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.9, delay: 0.9 }}
           className="flex flex-col md:flex-row items-start md:items-end justify-between gap-6 md:gap-10 border-t pt-8 md:pt-10"
-          style={{ borderColor: "rgba(184,149,106,0.12)" }}
+          style={{ borderColor: "rgba(255,255,255,0.15)" }}
         >
           <p
             className="font-inter text-sm leading-8 max-w-sm"
-            style={{ color: "var(--text-light)" }}
+            style={{ color: "rgba(255,255,255,0.75)" }}
           >
             Shop our curated kaftans, co-ord sets, salwars, frocks and more
             online — or catch us live on Facebook for an intimate,
@@ -111,7 +137,7 @@ export default function HeroSection() {
             <Link
               href="/collections"
               className="group font-inter text-[10px] tracking-[0.3em] uppercase flex items-center gap-3 transition-opacity duration-300 hover:opacity-60"
-              style={{ color: "var(--text-dark)" }}
+              style={{ color: "#fff" }}
             >
               <span>Explore Collections</span>
               <span className="transition-transform duration-300 group-hover:translate-x-1.5">→</span>
@@ -126,7 +152,7 @@ export default function HeroSection() {
         animate={{ opacity: 1 }}
         transition={{ delay: 1.4 }}
         className="relative z-10 border-t"
-        style={{ borderColor: "rgba(155,99,53,0.1)", background: "rgba(155,99,53,0.04)" }}
+        style={{ borderColor: "rgba(255,255,255,0.1)", background: "rgba(0,0,0,0.25)" }}
       >
         <div className="max-w-7xl mx-auto px-4 md:px-8">
           <div className="grid grid-cols-3">
@@ -138,17 +164,17 @@ export default function HeroSection() {
               <div
                 key={stat.label}
                 className="py-4 md:py-6 px-3 md:px-6 first:pl-0"
-                style={{ borderRight: i < 2 ? "1px solid rgba(184,149,106,0.12)" : "none" }}
+                style={{ borderRight: i < 2 ? "1px solid rgba(255,255,255,0.1)" : "none" }}
               >
                 <p
                   className="font-playfair text-2xl mb-1"
-                  style={{ color: "var(--gold)" }}
+                  style={{ color: "#E8C49A" }}
                 >
                   {stat.value}
                 </p>
                 <p
                   className="font-inter text-[10px] tracking-[0.2em] uppercase"
-                  style={{ color: "var(--text-light)" }}
+                  style={{ color: "rgba(255,255,255,0.6)" }}
                 >
                   {stat.label}
                 </p>
@@ -173,7 +199,7 @@ export default function HeroSection() {
         />
         <span
           className="font-inter text-[8px] tracking-[0.4em] uppercase"
-          style={{ color: "var(--text-light)" }}
+          style={{ color: "rgba(255,255,255,0.5)" }}
         >
           Scroll
         </span>

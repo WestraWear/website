@@ -61,7 +61,7 @@ export default function FeaturedCollections() {
   const isInView = useInView(ref, { once: true, margin: "-100px" });
 
   return (
-    <section className="section-padding" style={{ background: "var(--bg)" }}>
+    <section className="section-padding md:!pt-0" style={{ background: "var(--bg)" }}>
       <div className="max-w-7xl mx-auto px-4 md:px-8" ref={ref}>
         {/* Header row */}
         <motion.div

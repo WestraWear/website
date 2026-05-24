@@ -1,7 +1,7 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { motion } from "framer-motion";
+import { useEffect, useRef, useState } from "react";
+import { motion, useScroll, useTransform } from "framer-motion";
 import { FaInstagram, FaPlay, FaArrowRight, FaHeart, FaComment } from "react-icons/fa";
 import { api, type InstagramPost } from "@/lib/api";
 
@@ -50,6 +50,10 @@ export default function InstagramGalleryPage() {
   const [loading, setLoading] = useState(true);
   const [error,   setError]   = useState<string | null>(null);
 
+  const heroRef = useRef<HTMLElement>(null);
+  const { scrollYProgress } = useScroll({ target: heroRef, offset: ["start start", "end start"] });
+  const bgY = useTransform(scrollYProgress, [0, 1], ["0%", "30%"]);
+
   useEffect(() => {
     Promise.all([
       api.social.instagramFeed(24),
@@ -71,23 +75,37 @@ export default function InstagramGalleryPage() {
 
       {/* Hero */}
       <section
+        ref={heroRef}
         className="relative overflow-hidden"
-        style={{ background: "var(--bg-section)", minHeight: "60vh", display: "flex", flexDirection: "column", justifyContent: "flex-end" }}
+        style={{ minHeight: "100vh", display: "flex", flexDirection: "column", justifyContent: "flex-end" }}
       >
-        <div className="absolute inset-0 opacity-[0.035]" style={{ backgroundImage: "radial-gradient(var(--gold) 1px,transparent 1px)", backgroundSize: "40px 40px" }} />
-        <div className="absolute right-8 md:right-16 top-1/2 -translate-y-1/2 select-none pointer-events-none font-playfair" style={{ fontSize: "clamp(160px,28vw,400px)", color: "rgba(155,99,53,0.06)", lineHeight: 1 }}>
-          @
-        </div>
+        {/* Parallax background */}
+        <motion.div
+          className="absolute inset-0 pointer-events-none"
+          style={{
+            backgroundImage: "url('https://instagram.fccu10-1.fna.fbcdn.net/v/t51.82787-15/670918055_18100372480926630_6010916920716071216_n.heic?stp=dst-jpg_e35_tt6&_nc_cat=111&ig_cache_key=Mzg5NzgzODk1OTM1MTA1MDczMQ%3D%3D.3-ccb7-5&ccb=7-5&_nc_sid=58cdad&efg=eyJ2ZW5jb2RlX3RhZyI6IkNBUk9VU0VMX0lURU0ueHBpZHMuMTQ0MC5zZHIucmVndWxhcl9waG90by5DMyJ9&_nc_ohc=l0pNLqfjaRYQ7kNvwErwrix&_nc_oc=AdpSvsei_p8SZiE1mVAjHYtkFETHuUr4eQvJo-2bnQNHOdNyo_GqCYMz0K2T2LabTUs&_nc_ad=z-m&_nc_cid=0&_nc_zt=23&_nc_ht=instagram.fccu10-1.fna&_nc_gid=oLRfZyy3GOZ9wH4tFCUDTA&_nc_ss=7a22e&oh=00_Af7zvZHHKje7G77XlMX9mVJKJj4XMUmtrlbuwOTEGjJqOw&oe=6A1836F7')",
+            backgroundSize: "cover",
+            backgroundPosition: "center 10%",
+            backgroundRepeat: "no-repeat",
+            y: bgY,
+            scale: 1.15,
+          }}
+        />
+        {/* Dark overlay */}
+        <div
+          className="absolute inset-0 pointer-events-none"
+          style={{ background: "rgba(18,12,8,0.60)" }}
+        />
         <div className="relative z-10 max-w-7xl mx-auto px-4 md:px-8 pb-12 md:pb-20 pt-28 md:pt-40 w-full">
-          <motion.p initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7, ease: [0.22,1,0.36,1] }} className="font-inter text-[9px] tracking-[0.5em] uppercase mb-6 flex items-center gap-3" style={{ color: "var(--gold)" }}>
+          <motion.p initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7, ease: [0.22,1,0.36,1] }} className="font-inter text-[9px] tracking-[0.5em] uppercase mb-6 flex items-center gap-3" style={{ color: "#E8C49A" }}>
             <FaInstagram size={10} />
-            <span className="w-8 h-px inline-block" style={{ background: "var(--gold)" }} />
+            <span className="w-8 h-px inline-block" style={{ background: "#E8C49A" }} />
             @westra_wear
           </motion.p>
-          <motion.h1 initial={{ opacity: 0, y: 40 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.9, delay: 0.1, ease: [0.22,1,0.36,1] }} className="font-playfair leading-[0.9]" style={{ fontSize: "clamp(56px,10vw,140px)", color: "var(--text-dark)", letterSpacing: "-0.02em" }}>
-            Style<br /><em style={{ color: "var(--gold)" }}>Gallery</em>
+          <motion.h1 initial={{ opacity: 0, y: 40 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.9, delay: 0.1, ease: [0.22,1,0.36,1] }} className="font-playfair leading-[0.9]" style={{ fontSize: "clamp(56px,10vw,140px)", color: "#fff", letterSpacing: "-0.02em" }}>
+            Style<br /><em style={{ color: "#E8C49A" }}>Gallery</em>
           </motion.h1>
-          <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 0.25, ease: [0.22,1,0.36,1] }} className="font-cormorant text-xl md:text-2xl italic mt-6 max-w-lg" style={{ color: "var(--text-mid)" }}>
+          <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 0.25, ease: [0.22,1,0.36,1] }} className="font-cormorant text-xl md:text-2xl italic mt-6 max-w-lg" style={{ color: "rgba(255,255,255,0.75)" }}>
             Every post is a window into a wardrobe carefully curated for you.
           </motion.p>
         </div>
@@ -95,7 +113,7 @@ export default function InstagramGalleryPage() {
 
       {/* Stats */}
       <section style={{ background: "var(--bg-alt)", borderTop: "1px solid rgba(155,99,53,0.1)", borderBottom: "1px solid rgba(155,99,53,0.1)" }}>
-        <div className="max-w-7xl mx-auto px-4 md:px-8 py-8 grid grid-cols-2 md:grid-cols-4">
+        <div className="max-w-7xl mx-auto px-4 md:px-8 py-8 grid grid-cols-2 md:grid-cols-3">
           {([
             { value: fmtCount(stats?.followers_count), label: "Followers" },
             { value: fmtCount(stats?.media_count),     label: "Posts" },

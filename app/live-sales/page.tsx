@@ -279,7 +279,7 @@ export default function LiveSalesPage() {
           }}
         />
 
-        <div className="relative z-10 max-w-7xl mx-auto px-4 md:px-8">
+        <div className="relative z-10 max-w-7xl mx-auto px-4 md:px-8 md:!pb-16">
           {/* Top label row */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}

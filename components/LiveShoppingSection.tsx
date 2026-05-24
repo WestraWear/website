@@ -42,7 +42,7 @@ export default function LiveShoppingSection() {
   return (
     <section
       className="section-padding"
-      style={{ background: "var(--bg-section)", paddingTop: 0 }}
+      style={{ background: "var(--bg-section)" }}
     >
       <div className="max-w-7xl mx-auto px-4 md:px-8" ref={ref}>
         {/* Header */}
