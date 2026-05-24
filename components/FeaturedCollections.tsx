@@ -1,8 +1,9 @@
 "use client";
 
-import { motion, useInView } from "framer-motion";
-import { useRef } from "react";
+import { motion, useInView, AnimatePresence } from "framer-motion";
+import { useRef, useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 
 const collections = [
   {
@@ -11,6 +12,7 @@ const collections = [
     description: "Effortlessly matched co-ord sets for a polished, put-together look every day.",
     index: "01",
     href: "/collections#cord-set",
+    image: "https://cdn.westra.in/cdn-cgi/image/width=1920,quality=60,format=avif/co-ord-set.png",
   },
   {
     name: "Kaftan",
@@ -18,6 +20,7 @@ const collections = [
     description: "Flowing kaftans that drape gracefully — perfect from daywear to resort evenings.",
     index: "02",
     href: "/collections#kaftan",
+    image: "https://cdn.westra.in/cdn-cgi/image/width=1920,quality=60,format=avif/kaftan.png",
   },
   {
     name: "Salwar",
@@ -25,6 +28,7 @@ const collections = [
     description: "Classic salwar silhouettes reimagined with contemporary cuts and fine fabrics.",
     index: "03",
     href: "/collections#salwar",
+    image: "https://cdn.westra.in/cdn-cgi/image/width=1920,quality=60,format=avif/salwar.png",
   },
   {
     name: "Two Piece",
@@ -32,6 +36,7 @@ const collections = [
     description: "Versatile two-piece sets that take you from casual afternoons to evening outings.",
     index: "04",
     href: "/collections#two-piece",
+    image: null,
   },
   {
     name: "Tops",
@@ -39,26 +44,47 @@ const collections = [
     description: "A curated range of tops — from relaxed basics to statement embellished styles.",
     index: "05",
     href: "/collections#tops",
+    image: "https://cdn.westra.in/cdn-cgi/image/width=1920,quality=60,format=avif/tops.png",
+  },
+  {
+    name: "Bottoms",
+    tagline: "Grounded in style",
+    description: "Beautifully tailored bottoms — from relaxed palazzos to sleek trousers.",
+    index: "06",
+    href: "/collections#bottoms",
+    image: null,
   },
   {
     name: "Shirts",
     tagline: "Polished & refined",
     description: "Crisp, feminine shirts crafted in premium fabrics for every occasion.",
-    index: "06",
+    index: "07",
     href: "/collections#shirts",
+    image: null,
   },
   {
     name: "Frocks",
     tagline: "Playful meets chic",
     description: "Beautifully crafted frocks that blend charm with modern silhouettes.",
-    index: "07",
+    index: "08",
     href: "/collections#frocks",
+    image: null,
   },
 ];
 
 export default function FeaturedCollections() {
   const ref = useRef<HTMLDivElement>(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
+  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+  const [mouseY, setMouseY] = useState(0);
+  const listRef = useRef<HTMLDivElement>(null);
+
+  const handleMouseMove = (e: React.MouseEvent) => {
+    if (listRef.current) {
+      const rect = listRef.current.getBoundingClientRect();
+      setMouseY(e.clientY - rect.top);
+    }
+  };
 
   return (
     <section className="section-padding md:!pt-0" style={{ background: "var(--bg)" }}>
@@ -107,9 +133,39 @@ export default function FeaturedCollections() {
 
         {/* Collection list — editorial row style */}
         <div
-          className="flex flex-col border-t"
+          ref={listRef}
+          className="flex flex-col border-t relative"
           style={{ borderColor: "rgba(184,149,106,0.1)" }}
+          onMouseMove={handleMouseMove}
+          onMouseLeave={() => setHoveredIndex(null)}
         >
+          {/* Hover image preview */}
+          <AnimatePresence>
+            {hoveredIndex !== null && collections[hoveredIndex].image && (
+              <motion.div
+                key={hoveredIndex}
+                initial={{ opacity: 0, scale: 0.92 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.92 }}
+                transition={{ duration: 0.25, ease: "easeOut" }}
+                className="absolute left-1/3 pointer-events-none z-20"
+                style={{
+                  top: mouseY - 120,
+                  width: 260,
+                  height: 320,
+                }}
+              >
+                <Image
+                  src={collections[hoveredIndex].image!}
+                  alt={collections[hoveredIndex].name}
+                  fill
+                  className="object-cover"
+                  sizes="260px"
+                />
+              </motion.div>
+            )}
+          </AnimatePresence>
+
           {collections.map((col, i) => (
             <motion.div
               key={col.name}
@@ -123,6 +179,7 @@ export default function FeaturedCollections() {
                   style={{
                     borderColor: "rgba(184,149,106,0.1)",
                   }}
+                  onMouseEnter={() => setHoveredIndex(i)}
                 >
                   {/* Left */}
                   <div className="flex items-center gap-4 md:gap-8">

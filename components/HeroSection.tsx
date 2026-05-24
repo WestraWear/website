@@ -23,7 +23,7 @@ export default function HeroSection() {
       <motion.div
         className="absolute inset-0 pointer-events-none"
         style={{
-          backgroundImage: "url('https://scontent.fccu10-1.fna.fbcdn.net/v/t39.30808-6/700079005_122108593898695822_2803132509224644353_n.jpg?_nc_cat=107&ccb=1-7&_nc_sid=833d8c&_nc_ohc=Nsu01m3BLPUQ7kNvwGBGJPl&_nc_oc=Adq5YLOe9mkR0v9J1OPt49D7L7noI2psRebcEFqSmb4ukY8Eb_CYFgiR-1zqL2-Btrw&_nc_zt=23&_nc_ht=scontent.fccu10-1.fna&_nc_gid=OxeTO7_3-BEfXcyA2qEt1w&_nc_ss=7b2a8&oh=00_Af7JWvWuMYdYI6VftOhnEbgbCvz5912v8A3jN8dy1c_TMA&oe=6A182D81')",
+          backgroundImage: "url('https://cdn.westra.in/cdn-cgi/image/width=1920,quality=60,format=avif/hero-section-bg.png')",
           backgroundSize: "cover",
           backgroundPosition: "center",
           backgroundRepeat: "no-repeat",
