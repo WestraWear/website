@@ -48,10 +48,6 @@ export default async function LiveSalesPage() {
       <section className="relative overflow-hidden flex flex-col justify-end px-8 md:px-16 lg:px-24" style={{ height: "55vh", minHeight: 340, background: "var(--bg)", borderBottom: "1px solid rgba(155,99,53,0.08)" }}>
         <div className="absolute inset-0 pointer-events-none" style={{ background: "radial-gradient(ellipse at 50% 60%, rgba(155,99,53,0.06) 0%, transparent 70%)" }} />
         <div className="relative z-10 pb-12 md:pb-16">
-          <div className="flex items-center gap-2 mb-5">
-            <span className="w-2 h-2 rounded-full animate-pulse" style={{ background: "#ef4444" }} />
-            <p className="font-inter text-[9px] tracking-[0.5em] uppercase" style={{ color: "var(--gold)" }}>Live Now &amp; Upcoming</p>
-          </div>
           <h1 className="font-playfair" style={{ fontSize: "clamp(40px, 5.5vw, 88px)", color: "var(--text-dark)", letterSpacing: "-0.03em", lineHeight: 0.9 }}>
             Shop <em style={{ color: "var(--gold)" }}>Live</em>
           </h1>

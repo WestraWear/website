@@ -31,12 +31,12 @@ const collections = [
     image: "https://cdn.westra.in/cdn-cgi/image/width=1920,quality=60,format=avif/salwar.png",
   },
   {
-    name: "Two Piece",
-    tagline: "Mix, match & own it",
-    description: "Versatile two-piece sets that take you from casual afternoons to evening outings.",
+    name: "Kurti",
+    tagline: "Timeless & versatile",
+    description: "Elegant kurtis crafted for everyday grace — from casual staples to festive-ready styles.",
     index: "04",
-    href: "/collections#two-piece",
-    image: null,
+    href: "/collections#kurti",
+    image: "https://cdn.westra.in/cdn-cgi/image/width=1920,quality=60,format=avif/kurti.jpeg",
   },
   {
     name: "Tops",
@@ -44,7 +44,7 @@ const collections = [
     description: "A curated range of tops — from relaxed basics to statement embellished styles.",
     index: "05",
     href: "/collections#tops",
-    image: "https://cdn.westra.in/cdn-cgi/image/width=1920,quality=60,format=avif/tops.png",
+    image: "https://cdn.westra.in/cdn-cgi/image/width=1920,quality=60,format=avif/tops.jpeg",
   },
   {
     name: "Bottoms",
@@ -52,7 +52,7 @@ const collections = [
     description: "Beautifully tailored bottoms — from relaxed palazzos to sleek trousers.",
     index: "06",
     href: "/collections#bottoms",
-    image: null,
+    image: "https://cdn.westra.in/cdn-cgi/image/width=1920,quality=60,format=avif/bottoms.jpeg",
   },
   {
     name: "Shirts",
@@ -60,7 +60,7 @@ const collections = [
     description: "Crisp, feminine shirts crafted in premium fabrics for every occasion.",
     index: "07",
     href: "/collections#shirts",
-    image: null,
+    image: "https://cdn.westra.in/cdn-cgi/image/width=1920,quality=60,format=avif/shirts.jpeg",
   },
   {
     name: "Frocks",
@@ -68,7 +68,7 @@ const collections = [
     description: "Beautifully crafted frocks that blend charm with modern silhouettes.",
     index: "08",
     href: "/collections#frocks",
-    image: null,
+    image: "https://cdn.westra.in/cdn-cgi/image/width=1920,quality=60,format=avif/frock.jpeg",
   },
 ];
 
