@@ -75,7 +75,7 @@ export default function InstagramGallery({ initialPosts, initialReels, initialSt
       <section ref={heroRef} className="relative overflow-hidden" style={{ minHeight: "100vh", display: "flex", flexDirection: "column", justifyContent: "flex-end" }}>
         <motion.div className="absolute inset-0 pointer-events-none"
           style={{
-            backgroundImage: "url('https://instagram.fccu10-1.fna.fbcdn.net/v/t51.82787-15/670918055_18100372480926630_6010916920716071216_n.heic?stp=dst-jpg_e35_tt6&_nc_cat=111&ig_cache_key=Mzg5NzgzODk1OTM1MTA1MDczMQ%3D%3D.3-ccb7-5&ccb=7-5&_nc_sid=58cdad&efg=eyJ2ZW5jb2RlX3RhZyI6IkNBUk9VU0VMX0lURU0ueHBpZHMuMTQ0MC5zZHIucmVndWxhcl9waG90by5DMyJ9&_nc_ohc=l0pNLqfjaRYQ7kNvwErwrix&_nc_oc=AdpSvsei_p8SZiE1mVAjHYtkFETHuUr4eQvJo-2bnQNHOdNyo_GqCYMz0K2T2LabTUs&_nc_ad=z-m&_nc_cid=0&_nc_zt=23&_nc_ht=instagram.fccu10-1.fna&_nc_gid=oLRfZyy3GOZ9wH4tFCUDTA&_nc_ss=7a22e&oh=00_Af7zvZHHKje7G77XlMX9mVJKJj4XMUmtrlbuwOTEGjJqOw&oe=6A1836F7')",
+            backgroundImage: "url('https://cdn.westra.in/instagram_gallery_hero.jpg')",
             backgroundSize: "cover", backgroundPosition: "center 10%", backgroundRepeat: "no-repeat",
             y: bgY, scale: 1.15,
           }}

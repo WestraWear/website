@@ -4,7 +4,7 @@ import { motion, useInView, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
 import Link from "next/link";
 
-const BG_IMAGE = "url('https://scontent.fccu10-1.fna.fbcdn.net/v/t39.30808-6/701437120_122108589656695822_5264143355649113064_n.jpg?_nc_cat=110&ccb=1-7&_nc_sid=833d8c&_nc_ohc=iv0yI-JecdAQ7kNvwF70VoI&_nc_oc=AdoErNbS8Ew9M7BjZSqiV2VRafyXktXyFoA1E18qP8cKnCD6Bg5auF1zXtGpks08wpY&_nc_zt=23&_nc_ht=scontent.fccu10-1.fna&_nc_gid=SQ8dpe0s_gebKKLNi233tg&_nc_ss=7b2a8&oh=00_Af45lAKxnVop7i7Z3lt6iVgiAb2Lxjq3s_BZnS9ULrwyxQ&oe=6A180453')";
+const BG_IMAGE = "url('https://cdn.westra.in/about_section.jpg')";
 
 export default function AboutSection() {
   const sectionRef = useRef<HTMLElement>(null);

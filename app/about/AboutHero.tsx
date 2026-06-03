@@ -13,7 +13,7 @@ export default function AboutHero() {
       <motion.div
         className="absolute inset-0 pointer-events-none"
         style={{
-          backgroundImage: "url('https://scontent.fccu10-1.fna.fbcdn.net/v/t39.30808-6/701216904_122108592458695822_6133797794572917294_n.jpg?_nc_cat=110&ccb=1-7&_nc_sid=833d8c&_nc_ohc=0KY5Y3aWs8UQ7kNvwGN-UZ5&_nc_oc=AdrXnpkwqyoJDuSMlHIkQX0Uu-YyEWILfsoJjLkeRWlpbxWwdBbaDn_P8iaLMqABeBk&_nc_zt=23&_nc_ht=scontent.fccu10-1.fna&_nc_gid=KlUY55fAxQ8cg8Auy5jtjA&_nc_ss=7b2a8&oh=00_Af5a6Pn9U6Yzg_5EtlKLuSZMt2eQfRd8gmhQUWThhPxnug&oe=6A180DDD')",
+          backgroundImage: "url('https://cdn.westra.in/about_hero.jpg')",
           backgroundSize: "cover",
           backgroundPosition: "center 20%",
           backgroundRepeat: "no-repeat",

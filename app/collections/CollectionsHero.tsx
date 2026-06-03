@@ -13,7 +13,7 @@ export default function CollectionsHero() {
       <motion.div
         className="absolute inset-0 pointer-events-none"
         style={{
-          backgroundImage: "url('https://scontent.fccu10-1.fna.fbcdn.net/v/t39.30808-6/701260434_122108588720695822_2319626675885099207_n.jpg?_nc_cat=102&ccb=1-7&_nc_sid=833d8c&_nc_ohc=zxfTiD2oEwUQ7kNvwEOFIcd&_nc_oc=Ado6yTFxZ2wP02ghdm7Ll0-dyJjHwp999XemK0lnrNzDEcQWiDIJsxxl_6C5xrGby5g&_nc_zt=23&_nc_ht=scontent.fccu10-1.fna&_nc_gid=mekGE3R94dpW3xIEtUE0DA&_nc_ss=7b2a8&oh=00_Af5HEG63fms-CTNu2Dav97_DGuCMeEpkAb4UMcnhD_v0BQ&oe=6A18282E')",
+          backgroundImage: "url('https://cdn.westra.in/collections_hero.jpg')",
           backgroundSize: "cover",
           backgroundPosition: "top",
           backgroundRepeat: "no-repeat",

@@ -4,7 +4,7 @@ import { FaFacebook, FaInstagram, FaWhatsapp } from "react-icons/fa";
 
 export const dynamic = "force-dynamic";
 
-const BASE = "https://westrawear.com";
+const BASE = "https://westra.in";
 const API = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:8000/api/v1";
 
 async function fetchLives() {
